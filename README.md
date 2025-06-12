@@ -1,1 +1,1 @@
-# ERP-empresarial
+# Sistema gestão de estoque (brechó)
