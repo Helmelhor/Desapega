@@ -46,9 +46,9 @@ public class JTelaPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnNewButton = new JButton("Caixa");
-		btnNewButton.setBounds(10, 10, 153, 33);
-		contentPane.add(btnNewButton);
+		JButton btnCaixa = new JButton("Caixa");
+		btnCaixa.setBounds(10, 10, 153, 33);
+		contentPane.add(btnCaixa);
 
 		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
 		btnCadastrarProduto.setBounds(10, 53, 153, 34);
@@ -60,17 +60,17 @@ public class JTelaPrincipal extends JFrame {
 			dispose();
 		});
 
-		JButton btnCadastrarFuncionrio = new JButton("Cadastrar Funcionário");
-		btnCadastrarFuncionrio.setBounds(10, 97, 153, 40);
-		contentPane.add(btnCadastrarFuncionrio);
+		JButton btnCadastrarFuncionario = new JButton("Cadastrar Funcionário");
+		btnCadastrarFuncionario.setBounds(10, 97, 153, 40);
+		contentPane.add(btnCadastrarFuncionario);
 
 		JButton btnEstoque = new JButton("Estoque");
 		btnEstoque.setBounds(10, 146, 153, 35);
 		contentPane.add(btnEstoque);
 
-		JButton btnFinanas = new JButton("Finanças");
-		btnFinanas.setBounds(10, 191, 153, 31);
-		contentPane.add(btnFinanas);
+		JButton btnFinancas = new JButton("Finanças");
+		btnFinancas.setBounds(10, 191, 153, 31);
+		contentPane.add(btnFinancas);
 
 		JList list = new JList();
 		list.setBounds(386, 111, 10, 0);
@@ -86,15 +86,15 @@ public class JTelaPrincipal extends JFrame {
 		editorPane_1.setBounds(196, 177, 337, 45);
 		contentPane.add(editorPane_1);
 
-		JLabel lblNewLabel = new JLabel("Dashboard");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setBounds(196, 20, 94, 13);
-		contentPane.add(lblNewLabel);
+		JLabel lblDashboard = new JLabel("Dashboard");
+		lblDashboard.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDashboard.setBounds(196, 20, 94, 13);
+		contentPane.add(lblDashboard);
 
-		JLabel lblNewLabel_1 = new JLabel("Desempenho semanal");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(196, 157, 143, 13);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblDesempenhoSemanal = new JLabel("Desempenho semanal");
+		lblDesempenhoSemanal.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDesempenhoSemanal.setBounds(196, 157, 143, 13);
+		contentPane.add(lblDesempenhoSemanal);
 
 	}
 }

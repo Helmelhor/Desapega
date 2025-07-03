@@ -49,45 +49,45 @@ public class JCadastroProduto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Cadastro de Produto");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(267, 10, 225, 22);
-		contentPane.add(lblNewLabel);
+		JLabel lblCadastroProduto = new JLabel("Cadastro de Produto");
+		lblCadastroProduto.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCadastroProduto.setBounds(267, 10, 225, 22);
+		contentPane.add(lblCadastroProduto);
 
-		JLabel lblNewLabel_1 = new JLabel("Nome:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(46, 84, 67, 13);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNome.setBounds(46, 84, 67, 13);
+		contentPane.add(lblNome);
 
 		textField = new JTextField();
 		textField.setBounds(237, 78, 468, 30);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Descrição:");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1.setBounds(46, 133, 86, 13);
-		contentPane.add(lblNewLabel_1_1);
+		JLabel lblDescricao = new JLabel("Descrição:");
+		lblDescricao.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDescricao.setBounds(46, 133, 86, 13);
+		contentPane.add(lblDescricao);
 
-		JLabel lblNewLabel_1_1_1 = new JLabel("Quantidade em estoque :");
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_1.setBounds(46, 182, 199, 13);
-		contentPane.add(lblNewLabel_1_1_1);
+		JLabel lblQuantidadeEstoque = new JLabel("Quantidade em estoque :");
+		lblQuantidadeEstoque.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblQuantidadeEstoque.setBounds(46, 182, 199, 13);
+		contentPane.add(lblQuantidadeEstoque);
 
-		JLabel lblNewLabel_1_1_2 = new JLabel("Preço de custo:");
-		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_2.setBounds(46, 227, 133, 13);
-		contentPane.add(lblNewLabel_1_1_2);
+		JLabel lblPrecoCusto = new JLabel("Preço de custo:");
+		lblPrecoCusto.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrecoCusto.setBounds(46, 227, 133, 13);
+		contentPane.add(lblPrecoCusto);
 
-		JLabel lblNewLabel_1_1_3 = new JLabel("Preço de Venda:");
-		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_3.setBounds(46, 267, 119, 13);
-		contentPane.add(lblNewLabel_1_1_3);
+		JLabel lblPrecoVenda = new JLabel("Preço de Venda:");
+		lblPrecoVenda.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrecoVenda.setBounds(46, 267, 119, 13);
+		contentPane.add(lblPrecoVenda);
 
-		JLabel lblNewLabel_1_1_4 = new JLabel("Código de barras:");
-		lblNewLabel_1_1_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_4.setBounds(46, 309, 133, 13);
-		contentPane.add(lblNewLabel_1_1_4);
+		JLabel lblCodigoBarras = new JLabel("Código de barras:");
+		lblCodigoBarras.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCodigoBarras.setBounds(46, 309, 133, 13);
+		contentPane.add(lblCodigoBarras);
 
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -114,11 +114,11 @@ public class JCadastroProduto extends JFrame {
 		textField_5.setBounds(237, 303, 468, 30);
 		contentPane.add(textField_5);
 
-		JButton btnNewButton = new JButton("Salvar");
-		btnNewButton.setBackground(Color.GRAY);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton.setBounds(336, 368, 85, 21);
-		contentPane.add(btnNewButton);
+		JButton Salvar = new JButton("Salvar");
+		Salvar.setBackground(Color.GRAY);
+		Salvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		Salvar.setBounds(336, 368, 85, 21);
+		contentPane.add(Salvar);
 
 	}
 }
