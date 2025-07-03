@@ -78,8 +78,8 @@ public class Jlogin extends JFrame {
 
 			boolean autenticado = UsuarioRepository.autenticar(usuario, senha);
 			if (autenticado) {
-				JHome home = new JHome();
-				home.setVisible(true);
+				JTelaPrincipal telaPrincipal = new JTelaPrincipal();
+				telaPrincipal.setVisible(true);
 				dispose();
 			} else {
 				JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
