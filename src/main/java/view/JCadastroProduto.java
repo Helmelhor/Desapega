@@ -120,5 +120,11 @@ public class JCadastroProduto extends JFrame {
 		Salvar.setBounds(336, 368, 85, 21);
 		contentPane.add(Salvar);
 
+		//NOVO: Botão Voltar para a tela principal
+		JButton btnNewButton = new JButton("Voltar");
+		btnNewButton.setBackground(new Color(192, 192, 192));
+		btnNewButton.setBounds(10, 12, 77, 23);
+		contentPane.add(btnNewButton);
+
 	}
 }
