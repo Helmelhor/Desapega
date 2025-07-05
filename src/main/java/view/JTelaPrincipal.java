@@ -50,6 +50,12 @@ public class JTelaPrincipal extends JFrame {
 		btnCaixa.setBounds(10, 10, 153, 33);
 		contentPane.add(btnCaixa);
 
+		btnCaixa.addActionListener(e -> {
+			JTelaPagamentoPDV caixa = new JTelaPagamentoPDV();
+			caixa.setVisible(true);
+			dispose();
+		});
+
 		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
 		btnCadastrarProduto.setBounds(10, 53, 153, 34);
 		contentPane.add(btnCadastrarProduto);
@@ -67,6 +73,12 @@ public class JTelaPrincipal extends JFrame {
 		JButton btnEstoque = new JButton("Estoque");
 		btnEstoque.setBounds(10, 146, 153, 35);
 		contentPane.add(btnEstoque);
+
+		btnEstoque.addActionListener(e -> {
+			JEstoqueProdutos estoqueProdutos = new JEstoqueProdutos();
+			estoqueProdutos.setVisible(true);
+			dispose();
+		});
 
 		JButton btnFinancas = new JButton("Finanças");
 		btnFinancas.setBounds(10, 191, 153, 31);
