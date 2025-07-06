@@ -70,6 +70,12 @@ public class JTelaPrincipal extends JFrame {
 		btnCadastrarFuncionario.setBounds(10, 97, 153, 40);
 		contentPane.add(btnCadastrarFuncionario);
 
+		btnCadastrarFuncionario.addActionListener(e ->{
+			JCadastroFuncionario cadastroFuncionario = new JCadastroFuncionario();
+			cadastroFuncionario.setVisible(true);
+			dispose();
+		});
+
 		JButton btnEstoque = new JButton("Estoque");
 		btnEstoque.setBounds(10, 146, 153, 35);
 		contentPane.add(btnEstoque);
