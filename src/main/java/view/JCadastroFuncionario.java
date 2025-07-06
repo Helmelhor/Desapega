@@ -151,11 +151,14 @@ public class JCadastroFuncionario extends JFrame {
         JButton btnNewButton = new JButton("Voltar");
         btnNewButton.setBounds(22, 21, 73, 23);
         panel.add(btnNewButton);
-		
+
 		btnNewButton.addActionListener(e ->{
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
 			dispose();
 		});
+
+		
+
 	}
 }
