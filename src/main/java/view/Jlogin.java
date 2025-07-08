@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 public class Jlogin extends JFrame {
 
@@ -37,12 +38,14 @@ public class Jlogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(176, 219, 156));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(176, 219, 156));
 		panel.setBounds(82, 11, 254, 239);
 		contentPane.add(panel);
 		panel.setLayout(null);
