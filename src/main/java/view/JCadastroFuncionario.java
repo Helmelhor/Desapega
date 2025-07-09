@@ -14,9 +14,9 @@ public class JCadastroFuncionario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField preencherNome;
+	private JTextField preencherEmail;
+	private JTextField preencherTelefone;
 
 	/**
 	 * Launch the application.
@@ -50,20 +50,20 @@ public class JCadastroFuncionario extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Cadastrar funcionário");
-		lblNewLabel.setBounds(187, 5, 290, 38);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 31));
-		panel.add(lblNewLabel);
+		JLabel lblCadastrarFuncionario = new JLabel("Cadastrar funcionário");
+		lblCadastrarFuncionario.setBounds(187, 5, 290, 38);
+		lblCadastrarFuncionario.setFont(new Font("Tahoma", Font.PLAIN, 31));
+		panel.add(lblCadastrarFuncionario);
 
-		textField = new JTextField();
-		textField.setBounds(36, 127, 400, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		preencherNome = new JTextField();
+		preencherNome.setBounds(36, 127, 400, 20);
+		panel.add(preencherNome);
+		preencherNome.setColumns(10);
 
-		JLabel lblNewLabel_1 = new JLabel("Nome Completo");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(36, 102, 114, 14);
-		panel.add(lblNewLabel_1);
+		JLabel lblNome = new JLabel("Nome Completo");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNome.setBounds(36, 102, 114, 14);
+		panel.add(lblNome);
 
 		JLabel lblCpf = new JLabel("CPF:");
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -109,40 +109,40 @@ public class JCadastroFuncionario extends JFrame {
 		}
         panel.add(anoNascimento);
 
-        JLabel lblNewLabel_3 = new JLabel("Data de Nascimento");
-        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblNewLabel_3.setBounds(36, 242, 146, 14);
-        panel.add(lblNewLabel_3);
+        JLabel lblDataNascimento = new JLabel("Data de Nascimento");
+        lblDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblDataNascimento.setBounds(36, 242, 146, 14);
+        panel.add(lblDataNascimento);
 
-        JLabel lblNewLabel_4 = new JLabel("Sexo");
-        lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblNewLabel_4.setBounds(36, 316, 46, 14);
-        panel.add(lblNewLabel_4);
+        JLabel lblSexo = new JLabel("Sexo");
+        lblSexo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblSexo.setBounds(36, 316, 46, 14);
+        panel.add(lblSexo);
 
-        JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
-        comboBox.setBounds(36, 341, 96, 22);
-        panel.add(comboBox);
+        JComboBox BoxSexo = new JComboBox();
+        BoxSexo.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
+        BoxSexo.setBounds(36, 341, 96, 22);
+        panel.add(BoxSexo);
 
-        JLabel lblNewLabel_5 = new JLabel("Email");
-        lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblNewLabel_5.setBounds(36, 393, 46, 14);
-        panel.add(lblNewLabel_5);
+        JLabel lblEmail = new JLabel("Email");
+        lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblEmail.setBounds(36, 393, 46, 14);
+        panel.add(lblEmail);
 
-        textField_2 = new JTextField();
-        textField_2.setBounds(36, 418, 269, 20);
-        panel.add(textField_2);
-        textField_2.setColumns(10);
+        preencherEmail = new JTextField();
+        preencherEmail.setBounds(36, 418, 269, 20);
+        panel.add(preencherEmail);
+        preencherEmail.setColumns(10);
 
-        textField_3 = new JTextField();
-        textField_3.setBounds(36, 494, 186, 20);
-        panel.add(textField_3);
-        textField_3.setColumns(10);
+        preencherTelefone = new JTextField();
+        preencherTelefone.setBounds(36, 494, 186, 20);
+        panel.add(preencherTelefone);
+        preencherTelefone.setColumns(10);
 
-        JLabel lblNewLabel_6 = new JLabel("Telefone/Celular");
-        lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblNewLabel_6.setBounds(33, 469, 114, 14);
-        panel.add(lblNewLabel_6);
+        JLabel lblTelefone = new JLabel("Telefone/Celular");
+        lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblTelefone.setBounds(33, 469, 114, 14);
+        panel.add(lblTelefone);
 
         JButton btnAdicionar = new JButton("Adicionar");
         btnAdicionar.setForeground(new Color(255, 255, 255));
@@ -176,11 +176,11 @@ public class JCadastroFuncionario extends JFrame {
 
 		panel.add(btnAdicionar);
 
-		JButton btnNewButton = new JButton("Voltar");
-        btnNewButton.setBounds(22, 21, 73, 23);
-        panel.add(btnNewButton);
+		JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setBounds(22, 21, 73, 23);
+        panel.add(btnVoltar);
 
-		btnNewButton.addActionListener(e ->{
+		btnVoltar.addActionListener(e ->{
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
 			dispose();
