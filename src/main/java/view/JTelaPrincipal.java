@@ -90,6 +90,12 @@ public class JTelaPrincipal extends JFrame {
 		btnFinancas.setBounds(10, 191, 153, 31);
 		contentPane.add(btnFinancas);
 
+		btnFinancas.addActionListener(e -> {
+			JFinancas financas= new JFinancas();
+			financas.setVisible(true);
+			dispose();
+		});
+		
 		JList list = new JList();
 		list.setBounds(386, 111, 10, 0);
 		contentPane.add(list);
