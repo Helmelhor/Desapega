@@ -36,9 +36,8 @@ public class Produtos {
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario", nullable = false)
-    private Usuario usuario;//alterar
-
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "usuario", nullable = false)
+//    private Usuario usuario;//alterar
 
 }
