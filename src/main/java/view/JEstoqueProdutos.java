@@ -63,6 +63,8 @@ public class JEstoqueProdutos extends JFrame {
 			public void run() {
 				try {
 					JEstoqueProdutos frame = new JEstoqueProdutos();
+					//centralizando a tela
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
