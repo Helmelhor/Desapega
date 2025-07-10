@@ -87,6 +87,8 @@ public class JTelaPagamentoPDV extends JFrame {
                 e.printStackTrace();
             }
             JTelaPagamentoPDV frame = new JTelaPagamentoPDV();
+          //centralizando a tela
+			frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
     }
