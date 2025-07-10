@@ -26,6 +26,8 @@ public class JCadastroFuncionario extends JFrame {
 			public void run() {
 				try {
 					JCadastroFuncionario frame = new JCadastroFuncionario();
+					//centralizando a tela
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
