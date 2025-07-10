@@ -26,6 +26,8 @@ public class JTelaPrincipal extends JFrame {
 			public void run() {
 				try {
 					JTelaPrincipal frame = new JTelaPrincipal();
+					//centralizando a tela
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
