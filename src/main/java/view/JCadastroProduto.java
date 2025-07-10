@@ -30,6 +30,8 @@ public class JCadastroProduto extends JFrame {
 			public void run() {
 				try {
 					JCadastroProduto frame = new JCadastroProduto();
+					//centralizando a tela
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
