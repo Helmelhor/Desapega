@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class JTelaPagamentoPDV extends JFrame {
@@ -16,7 +18,7 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JLabel labelTotal;
     private final JButton botaoCancelar;
     private final JComboBox<String> comboFormaPagamento;
-    private final JButton botaoConfirmarPagamento; // Botão de confirmação
+    private JButton btnNewButton;
 
     public JTelaPagamentoPDV() {
 
@@ -64,26 +66,30 @@ public class JTelaPagamentoPDV extends JFrame {
         comboFormaPagamento = new JComboBox<>(formasPagamento);
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
 
-        // NOVO: Criação do botão de confirmação
-        botaoConfirmarPagamento = new JButton("Confirmar Pagamento");
-
         // NOVO: Botão Voltar para a tela principal
         JButton botaoVoltar = new JButton("Voltar");
-        botaoVoltar.addActionListener(e -> {
-            JTelaPrincipal telaPrincipal = new JTelaPrincipal();
-            telaPrincipal.setVisible(true);
-            dispose();
-        });
+        //botaoVoltar.addActionListener(e -> {
+            //JTelaPrincipal telaPrincipal = new JTelaPrincipal();
+            //telaPrincipal.setVisible(true);
+            //dispose();
+        //});
 
         painelBotoesFinais.add(botaoVoltar);
         painelBotoesFinais.add(botaoCancelar);
         painelBotoesFinais.add(new JLabel("Forma de Pagamento:"));
         painelBotoesFinais.add(comboFormaPagamento);
-        painelBotoesFinais.add(botaoConfirmarPagamento);
 
         painelSul.add(painelBotoesFinais, BorderLayout.CENTER);
 
         contentPane.add(painelSul, BorderLayout.SOUTH);
+        
+        btnNewButton = new JButton("Finalizar Compra");
+        btnNewButton.setEnabled(false);
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        painelSul.add(btnNewButton, BorderLayout.EAST);
     }
 
     public static void main(String[] args) {
