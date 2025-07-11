@@ -53,6 +53,7 @@ public class JCadastroProduto extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
 		JLabel lblCadastroProduto = new JLabel("Cadastro de Produto");
 		lblCadastroProduto.setFont(new Font("Tahoma", Font.BOLD, 15));

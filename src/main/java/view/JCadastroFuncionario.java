@@ -49,6 +49,7 @@ public class JCadastroFuncionario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 10, 664, 640);

@@ -48,6 +48,8 @@ public class JTelaPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
+
 		JButton btnCaixa = new JButton("Caixa");
 		btnCaixa.setBounds(10, 10, 153, 33);
 		contentPane.add(btnCaixa);

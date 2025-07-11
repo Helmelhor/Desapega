@@ -47,6 +47,7 @@ public class JFinancas extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 		
 		JLabel lblResumoFinanceiro = new JLabel("Resumo Finaçeiro");
 		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 13));
