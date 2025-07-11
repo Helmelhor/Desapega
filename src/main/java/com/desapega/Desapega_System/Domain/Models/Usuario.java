@@ -31,10 +31,10 @@ public class Usuario {
     private TipoUsuario tipo_usuario;
 
     //relacionamentos
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Produtos> produtos;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pedido> pedidos;
+//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Produtos> produtos;
+//
+//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Pedido> pedidos;
 
 }

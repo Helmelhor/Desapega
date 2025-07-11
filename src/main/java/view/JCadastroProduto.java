@@ -140,10 +140,12 @@ public class JCadastroProduto extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String nome = campoNome.getText().trim();
-					String descricao = campoDescricao.getText().trim();
-					BigDecimal preco = new BigDecimal(campoPreco.getText().trim());
-					int estoque = Integer.parseInt(campoEstoque.getText().trim());
+					String nome = textField.getText().trim();
+					String descricao = textField_1.getText().trim();
+					int estoque = Integer.parseInt(textField_2.getText().trim());
+					BigDecimal preco = new BigDecimal(textField_4.getText().trim());
+					//BigDecimal preco = new BigDecimal(campoPreco.getText().trim());
+					//int estoque = Integer.parseInt(campoEstoque.getText().trim());
 
 					Produtos produto = new Produtos();
 					produto.setNomeProduto(nome);
