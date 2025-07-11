@@ -19,7 +19,7 @@ public class JCadastroFuncionario extends JFrame {
 	private JPanel contentPane;
 	private JTextField preencherNome;
 	private JTextField preencherEmail;
-	private JTextField preencherTelefone;
+	private JFormattedTextField preencherTelefone;
 
 	/**
 	 * Launch the application.
@@ -139,17 +139,23 @@ public class JCadastroFuncionario extends JFrame {
         panel.add(preencherEmail);
         preencherEmail.setColumns(10);
 
-        preencherTelefone = new JTextField();
-        preencherTelefone.setBounds(36, 494, 186, 20);
-        panel.add(preencherTelefone);
-        preencherTelefone.setColumns(10);
+		try {
+			MaskFormatter telefoneMask = new MaskFormatter("(##)#####-####");
+			telefoneMask.setPlaceholderCharacter('_');
+			preencherTelefone = new JFormattedTextField(telefoneMask);
+			preencherTelefone.setBounds(36, 494, 186, 20);
+			panel.add(preencherTelefone);
+			preencherTelefone.setColumns(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        JLabel lblTelefone = new JLabel("Telefone/Celular");
+		JLabel lblTelefone = new JLabel("Telefone/Celular");
         lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblTelefone.setBounds(33, 469, 114, 14);
         panel.add(lblTelefone);
 
-        JButton btnAdicionar = new JButton("Adicionar");
+		JButton btnAdicionar = new JButton("Adicionar");
         btnAdicionar.setForeground(new Color(255, 255, 255));
         btnAdicionar.setBackground(new Color(45, 60, 215));
         btnAdicionar.setBounds(300, 585, 89, 23);
@@ -219,29 +225,6 @@ public class JCadastroFuncionario extends JFrame {
 				}
 			}
 		});
-
-//		btnAdicionar.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				String cpfDigitado = finalCampoCPF.getText();
-//
-//				if (cpfDigitado.contains("_")) {
-//					JOptionPane.showMessageDialog(
-//							JCadastroFuncionario.this,
-//							"CPF inválido! Preencha todos os dígitos corretamente.",
-//							"Erro de Validação",
-//							JOptionPane.ERROR_MESSAGE
-//					);
-//				} else {
-//					JOptionPane.showMessageDialog(
-//							JCadastroFuncionario.this,
-//							"Cadastro realizado com sucesso!",
-//							"Sucesso",
-//							JOptionPane.INFORMATION_MESSAGE
-//					);
-//				}
-//			}
-//		});
 
 		panel.add(btnAdicionar);
 
