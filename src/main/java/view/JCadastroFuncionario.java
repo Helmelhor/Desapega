@@ -1,5 +1,8 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Models.Funcionario;
+import com.desapega.Desapega_System.Services.BDServices;
+
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -153,28 +156,92 @@ public class JCadastroFuncionario extends JFrame {
         panel.add(btnAdicionar);
 
 		JFormattedTextField finalCampoCPF = campoCPF;
+
 		btnAdicionar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String cpfDigitado = finalCampoCPF.getText();
+				try {
+					String nome = preencherNome.getText().trim();
+					String cpf = finalCampoCPF.getText().trim();
+					String email = preencherEmail.getText().trim();
+					String telefone = preencherTelefone.getText().trim();
+					String sexo = BoxSexo.getSelectedItem().toString();
 
-				if (cpfDigitado.contains("_")) {
+					int dia = (int) dataNascimento.getSelectedItem();
+					int mes = (int) mesNascimento.getSelectedItem();
+					int ano = (int) anoNascimento.getSelectedItem();
+					String dataNascimentoStr = String.format("%02d/%02d/%04d", dia, mes, ano);
+
+					if (cpf.contains("_") || nome.isEmpty() || email.isEmpty()) {
+						JOptionPane.showMessageDialog(
+								JCadastroFuncionario.this,
+								"Preencha todos os campos corretamente.",
+								"Erro de Validação",
+								JOptionPane.ERROR_MESSAGE
+						);
+						return;
+					}
+
+					Funcionario funcionario = new Funcionario();
+					funcionario.setNome(nome);
+					funcionario.setCpf(cpf);
+					funcionario.setDataNascimento(dataNascimentoStr);
+					funcionario.setSexo(sexo);
+					funcionario.setEmail(email);
+					funcionario.setTelefone(telefone);
+
+					BDServices.adicionarFuncionario(funcionario);
+
 					JOptionPane.showMessageDialog(
 							JCadastroFuncionario.this,
-							"CPF inválido! Preencha todos os dígitos corretamente.",
-							"Erro de Validação",
-							JOptionPane.ERROR_MESSAGE
-					);
-				} else {
-					JOptionPane.showMessageDialog(
-							JCadastroFuncionario.this,
-							"Cadastro realizado com sucesso!",
+							"Funcionário cadastrado com sucesso!",
 							"Sucesso",
 							JOptionPane.INFORMATION_MESSAGE
+					);
+
+					preencherNome.setText("");
+					preencherEmail.setText("");
+					preencherTelefone.setText("");
+					finalCampoCPF.setText("");
+					dataNascimento.setSelectedItem(1);
+					mesNascimento.setSelectedItem(1);
+					anoNascimento.setSelectedItem(2025);
+
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(
+							JCadastroFuncionario.this,
+							"Erro ao cadastrar funcionário: " + ex.getMessage(),
+							"Erro",
+							JOptionPane.ERROR_MESSAGE
 					);
 				}
 			}
 		});
+
+//		btnAdicionar.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String cpfDigitado = finalCampoCPF.getText();
+//
+//				if (cpfDigitado.contains("_")) {
+//					JOptionPane.showMessageDialog(
+//							JCadastroFuncionario.this,
+//							"CPF inválido! Preencha todos os dígitos corretamente.",
+//							"Erro de Validação",
+//							JOptionPane.ERROR_MESSAGE
+//					);
+//				} else {
+//					JOptionPane.showMessageDialog(
+//							JCadastroFuncionario.this,
+//							"Cadastro realizado com sucesso!",
+//							"Sucesso",
+//							JOptionPane.INFORMATION_MESSAGE
+//					);
+//				}
+//			}
+//		});
 
 		panel.add(btnAdicionar);
 
