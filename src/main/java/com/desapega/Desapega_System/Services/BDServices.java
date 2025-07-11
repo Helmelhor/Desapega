@@ -82,4 +82,14 @@ public class BDServices {
         em.close();
         return item;
     }
+
+    public static void adicionarFuncionario(Funcionario funcionario) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(funcionario);
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+    }
+
 }
