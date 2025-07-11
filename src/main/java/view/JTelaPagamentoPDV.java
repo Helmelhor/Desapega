@@ -67,6 +67,15 @@ public class JTelaPagamentoPDV extends JFrame {
         // NOVO: Criação do botão de confirmação
         botaoConfirmarPagamento = new JButton("Confirmar Pagamento");
 
+        // NOVO: Botão Voltar para a tela principal
+        JButton botaoVoltar = new JButton("Voltar");
+        botaoVoltar.addActionListener(e -> {
+            JTelaPrincipal telaPrincipal = new JTelaPrincipal();
+            telaPrincipal.setVisible(true);
+            dispose();
+        });
+
+        painelBotoesFinais.add(botaoVoltar);
         painelBotoesFinais.add(botaoCancelar);
         painelBotoesFinais.add(new JLabel("Forma de Pagamento:"));
         painelBotoesFinais.add(comboFormaPagamento);
