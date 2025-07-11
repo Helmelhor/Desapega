@@ -68,11 +68,11 @@ public class JTelaPagamentoPDV extends JFrame {
 
         // NOVO: Botão Voltar para a tela principal
         JButton botaoVoltar = new JButton("Voltar");
-        //botaoVoltar.addActionListener(e -> {
-            //JTelaPrincipal telaPrincipal = new JTelaPrincipal();
-            //telaPrincipal.setVisible(true);
-            //dispose();
-        //});
+        botaoVoltar.addActionListener(e -> {
+            JTelaPrincipal telaPrincipal = new JTelaPrincipal();
+            telaPrincipal.setVisible(true);
+            dispose();
+        });
 
         painelBotoesFinais.add(botaoVoltar);
         painelBotoesFinais.add(botaoCancelar);
