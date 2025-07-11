@@ -90,5 +90,8 @@ public class Jlogin extends JFrame {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
             }
         });
+
+        //usando botão enter
+        getRootPane().setDefaultButton(btnNewButton);
     }
 }
