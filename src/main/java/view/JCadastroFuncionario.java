@@ -4,6 +4,7 @@ import com.desapega.Desapega_System.Domain.Models.Funcionario;
 import com.desapega.Desapega_System.Domain.Models.Usuario;
 import com.desapega.Desapega_System.Services.BDServices;
 import com.desapega.Desapega_System.Domain.Enum.TipoUsuario;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.awt.EventQueue;
 
@@ -200,7 +201,8 @@ public class JCadastroFuncionario extends JFrame {
 					funcionario.setTelefone(telefone);
 
 					Usuario usuario = new Usuario();
-					usuario.setSenhaUsuario(cpf);
+					String senhaCriptografada = BCrypt.hashpw(cpf, BCrypt.gensalt());
+					usuario.setSenhaUsuario(senhaCriptografada);
 					usuario.setNomeUsuario(nome);
 					usuario.setTelefoneUsuario(telefone);
 					usuario.setEmailUsuario(email);
