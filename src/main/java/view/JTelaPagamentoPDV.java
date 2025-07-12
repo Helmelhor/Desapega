@@ -1,12 +1,17 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Controllers.CriacaoPagamento;
+import com.desapega.Desapega_System.Domain.Models.PedidoPagamento;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JTelaPagamentoPDV extends JFrame {
 
@@ -27,6 +32,27 @@ public class JTelaPagamentoPDV extends JFrame {
             totalVenda += Double.parseDouble(valor);
         }
         labelTotal.setText(String.format("Total da venda: R$ %.2f", totalVenda));
+    }
+
+    private List<PedidoPagamento.Item> montarItensParaPagamento() {
+        List<PedidoPagamento.Item> itens = new ArrayList<>();
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            String nome = tableModel.getValueAt(i, 0).toString();
+            double preco = Double.parseDouble(tableModel.getValueAt(i, 1).toString().replace("R$", "").replace(",", ".").trim());
+            int quantidade = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
+
+            PedidoPagamento.Item item = new PedidoPagamento.Item();
+            item.setId(i + 1); // ou ID real do banco
+            item.setTitle(nome);
+            item.setCurrency_id("BRL");
+            item.setQuantity(quantidade);
+            item.setUnit_price(preco);
+
+            itens.add(item);
+        }
+
+        return itens;
     }
 
     public JTelaPagamentoPDV() {
@@ -135,7 +161,6 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
-
         // NOVO: Botão Voltar para a tela principal
         JButton botaoVoltar = new JButton("Voltar");
         botaoVoltar.addActionListener(e -> {
@@ -160,6 +185,25 @@ public class JTelaPagamentoPDV extends JFrame {
         	}
         });
         painelSul.add(btnNewButton, BorderLayout.CENTER);
+
+        btnNewButton.addActionListener(e -> {
+            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
+
+            CriacaoPagamento pagamentoController = new CriacaoPagamento();
+            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
+
+            if (urlPagamento != null) {
+                try {
+                    Desktop.getDesktop().browse(new URI(urlPagamento));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
+            }
+        });
+
     }
 
     public static void main(String[] args) {
