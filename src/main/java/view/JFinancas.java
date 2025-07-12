@@ -26,7 +26,7 @@ public class JFinancas extends JFrame {
 			public void run() {
 				try {
 					JFinancas frame = new JFinancas();
-					
+
 					//centralizando a tela
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
@@ -48,16 +48,16 @@ public class JFinancas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
-		
-		JLabel lblResumoFinanceiro = new JLabel("Resumo Finaçeiro");
+
+		JLabel lblResumoFinanceiro = new JLabel("Resumo Finaceiro");
 		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblResumoFinanceiro.setBounds(216, 10, 137, 22);
 		contentPane.add(lblResumoFinanceiro);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 53, 534, 207);
 		contentPane.add(scrollPane);
-		
+
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
@@ -67,7 +67,7 @@ public class JFinancas extends JFrame {
 				"Ent./Sa\u00EDda", "Data", "Produto", "Valor ", "Quantidade P."
 			}
 		));
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(254, 270, 85, 21);
 		contentPane.add(btnVoltar);
@@ -80,4 +80,3 @@ public class JFinancas extends JFrame {
 
 	}
 }
-
