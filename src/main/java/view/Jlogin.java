@@ -1,7 +1,6 @@
 package view;
 
 import com.desapega.Desapega_System.Services.BDServices;
-import com.desapega.Desapega_System.repository.UsuarioRepository;
 
 import java.awt.EventQueue;
 
