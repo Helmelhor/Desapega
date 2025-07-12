@@ -20,6 +20,15 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JComboBox<String> comboFormaPagamento;
     private JButton btnNewButton;
 
+    private void atualizarTotal() {
+        double totalVenda = 0.0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            String valor = tableModel.getValueAt(i, 3).toString().replace("R$", "").trim().replace(",", ".");
+            totalVenda += Double.parseDouble(valor);
+        }
+        labelTotal.setText(String.format("Total da venda: R$ %.2f", totalVenda));
+    }
+
     public JTelaPagamentoPDV() {
 
         setTitle("PDV - Caixa Aberto");
@@ -47,9 +56,57 @@ public class JTelaPagamentoPDV extends JFrame {
                 return false;
             }
         };
+
         tabelaItens = new JTable(tableModel);
         tabelaItens.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tabelaItens.setRowHeight(25);
+
+        botaoAdicionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO trocar por busca real de produtos depois
+                String nome = "Produto Exemplo";
+                double precoUnitario = 10.0;
+                int quantidade = 1;
+                double total = precoUnitario * quantidade;
+
+                tableModel.addRow(new Object[]{
+                        nome,
+                        String.format("R$ %.2f", precoUnitario),
+                        quantidade,
+                        String.format("R$ %.2f", total)
+                });
+
+                atualizarTotal();
+
+                btnNewButton.setEnabled(true);
+            }
+        });
+
+        tabelaItens.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int linhaSelecionada = tabelaItens.getSelectedRow();
+
+                if (linhaSelecionada != -1 && SwingUtilities.isLeftMouseButton(evt)) {
+                    int opcao = JOptionPane.showConfirmDialog(
+                            JTelaPagamentoPDV.this,
+                            "Deseja remover este item da venda?",
+                            "Confirmar remoção",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (opcao == JOptionPane.YES_OPTION) {
+                        tableModel.removeRow(linhaSelecionada);
+                        atualizarTotal();
+
+                        if (tableModel.getRowCount() == 0) {
+                            btnNewButton.setEnabled(false);
+                        }
+                    }
+                }
+            }
+        });
 
         JScrollPane scrollPane = new JScrollPane(tabelaItens);
         contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -65,6 +122,19 @@ public class JTelaPagamentoPDV extends JFrame {
         String[] formasPagamento = {"Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Pix"};
         comboFormaPagamento = new JComboBox<>(formasPagamento);
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
+
+        botaoCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhas = tableModel.getRowCount();
+                for (int i = linhas - 1; i >= 0; i--) {
+                    tableModel.removeRow(i);
+                }
+                labelTotal.setText("Total da venda: R$ 0.00");
+                btnNewButton.setEnabled(false);
+            }
+        });
+
 
         // NOVO: Botão Voltar para a tela principal
         JButton botaoVoltar = new JButton("Voltar");
@@ -82,7 +152,7 @@ public class JTelaPagamentoPDV extends JFrame {
         painelSul.add(painelBotoesFinais, BorderLayout.SOUTH);
 
         contentPane.add(painelSul, BorderLayout.SOUTH);
-        
+
         btnNewButton = new JButton("Finalizar Compra");
         btnNewButton.setEnabled(false);
         btnNewButton.addActionListener(new ActionListener() {
