@@ -1,5 +1,7 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Models.Produtos;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.util.List;
 
 public class JEstoqueProdutos extends JFrame {
 

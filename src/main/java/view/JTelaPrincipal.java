@@ -1,5 +1,8 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Models.Produtos;
+import com.desapega.Desapega_System.Services.BDServices;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,6 +14,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.UIManager;
 
 public class JTelaPrincipal extends JFrame {
@@ -85,6 +89,8 @@ public class JTelaPrincipal extends JFrame {
 		contentPane.add(btnEstoque);
 
 		btnEstoque.addActionListener(e -> {
+			//List<Produtos> listaProdutos = BDServices.consultarTodosProdutos();
+			//JEstoque estoqueProdutos = new JEstoque(listaProdutos);
 			JEstoqueProdutos estoqueProdutos = new JEstoqueProdutos();
 			estoqueProdutos.setVisible(true);
 			dispose();
@@ -99,7 +105,7 @@ public class JTelaPrincipal extends JFrame {
 			financas.setVisible(true);
 			dispose();
 		});
-		
+
 		JList list = new JList();
 		list.setBounds(386, 111, 10, 0);
 		contentPane.add(list);

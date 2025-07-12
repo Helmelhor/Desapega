@@ -3,6 +3,8 @@ package com.desapega.Desapega_System.Services;
 import com.desapega.Desapega_System.Domain.Models.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 public class BDServices {
 
     private static final EntityManagerFactory emf =
@@ -90,6 +92,13 @@ public class BDServices {
         em.getTransaction().commit();
         em.close();
         emf.close();
+    }
+
+    public static List<Produtos> consultarTodosProdutos() {
+        EntityManager em = emf.createEntityManager();
+        List<Produtos> produtos = em.createQuery("SELECT p FROM Produtos p", Produtos.class).getResultList();
+        em.close();
+        return produtos;
     }
 
 }
