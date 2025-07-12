@@ -2,6 +2,7 @@ package com.desapega.Desapega_System.Services;
 
 import com.desapega.Desapega_System.Domain.Models.*;
 import jakarta.persistence.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -99,6 +100,26 @@ public class BDServices {
         List<Produtos> produtos = em.createQuery("SELECT p FROM Produtos p", Produtos.class).getResultList();
         em.close();
         return produtos;
+    }
+
+    public static boolean autenticar(String nomeUsuario, String senhaDigitada) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            TypedQuery<Usuario> query = em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.nome = :nome", Usuario.class);
+            query.setParameter("nome", nomeUsuario);
+
+            List<Usuario> resultado = query.getResultList();
+
+            if (!resultado.isEmpty()) {
+                Usuario usuario = resultado.get(0);
+                return BCrypt.checkpw(senhaDigitada, usuario.getSenhaUsuario());
+            }
+            return false;
+        } finally {
+            em.close();
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package view;
 
+import com.desapega.Desapega_System.Services.BDServices;
 import com.desapega.Desapega_System.repository.UsuarioRepository;
 
 import java.awt.EventQueue;
@@ -81,7 +82,7 @@ public class Jlogin extends JFrame {
             String usuario = textField.getText();
             String senha = new String(passwordField.getPassword());
 
-            boolean autenticado = UsuarioRepository.autenticar(usuario, senha);
+            boolean autenticado = BDServices.autenticar(usuario, senha);
             if (autenticado) {
                 JTelaPrincipal telaPrincipal = new JTelaPrincipal();
                 telaPrincipal.setVisible(true);
@@ -91,7 +92,6 @@ public class Jlogin extends JFrame {
             }
         });
 
-        //usando botão enter
         getRootPane().setDefaultButton(btnNewButton);
     }
 }
