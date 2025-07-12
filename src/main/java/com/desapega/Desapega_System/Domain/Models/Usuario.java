@@ -2,10 +2,17 @@ package com.desapega.Desapega_System.Domain.Models;
 
 import com.desapega.Desapega_System.Domain.Enum.TipoUsuario;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "usuario_table")
 public class Usuario {
 
@@ -29,12 +36,5 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_usuario", nullable = false)
     private TipoUsuario tipo_usuario;
-
-    //relacionamentos
-//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Produtos> produtos;
-//
-//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Pedido> pedidos;
 
 }

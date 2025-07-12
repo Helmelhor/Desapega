@@ -1,7 +1,9 @@
 package view;
 
 import com.desapega.Desapega_System.Domain.Models.Funcionario;
+import com.desapega.Desapega_System.Domain.Models.Usuario;
 import com.desapega.Desapega_System.Services.BDServices;
+import com.desapega.Desapega_System.Domain.Enum.TipoUsuario;
 
 import java.awt.EventQueue;
 
@@ -197,7 +199,15 @@ public class JCadastroFuncionario extends JFrame {
 					funcionario.setEmail(email);
 					funcionario.setTelefone(telefone);
 
+					Usuario usuario = new Usuario();
+					usuario.setSenhaUsuario(cpf);
+					usuario.setNomeUsuario(nome);
+					usuario.setTelefoneUsuario(telefone);
+					usuario.setEmailUsuario(email);
+					usuario.setTipo_usuario(TipoUsuario.USUARIO);
+
 					BDServices.adicionarFuncionario(funcionario);
+					BDServices.adicionarUsuario(usuario);
 
 					JOptionPane.showMessageDialog(
 							JCadastroFuncionario.this,
@@ -213,7 +223,6 @@ public class JCadastroFuncionario extends JFrame {
 					dataNascimento.setSelectedItem(1);
 					mesNascimento.setSelectedItem(1);
 					anoNascimento.setSelectedItem(2025);
-
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
