@@ -89,9 +89,9 @@ public class JTelaPrincipal extends JFrame {
 		contentPane.add(btnEstoque);
 
 		btnEstoque.addActionListener(e -> {
-			//List<Produtos> listaProdutos = BDServices.consultarTodosProdutos();
-			//JEstoque estoqueProdutos = new JEstoque(listaProdutos);
-			JEstoqueProdutos estoqueProdutos = new JEstoqueProdutos();
+			List<Produtos> listaProdutos = BDServices.consultarTodosProdutos();
+			JEstoque estoqueProdutos = new JEstoque(listaProdutos);
+			//JEstoqueProdutos estoqueProdutos = new JEstoqueProdutos();
 			estoqueProdutos.setVisible(true);
 			dispose();
 		});

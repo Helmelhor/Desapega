@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class Produtos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_produto")
     private Long idProduto;
 
     @Column(name = "nome_produto", nullable = false)
@@ -35,9 +36,5 @@ public class Produtos {
 
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "usuario", nullable = false)
-//    private Usuario usuario;//alterar
 
 }
