@@ -84,10 +84,12 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
-        // Carregar produtos do banco
+        // Carrega somente produtos com estoque >= 1
         List<Produtos> produtos = BDServices.consultarTodosProdutos();
         for (Produtos produto : produtos) {
-            comboProdutos.addItem(produto);
+            if (produto.getEstoqueProduto() >= 1) {
+                comboProdutos.addItem(produto);
+            }
         }
 
         painelNorte.add(comboProdutos, BorderLayout.CENTER);
