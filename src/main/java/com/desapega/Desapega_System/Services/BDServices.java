@@ -105,7 +105,6 @@ public class BDServices {
         }
     }
 
-
     public static void adicionarFuncionario(Funcionario funcionario) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -150,6 +149,48 @@ public class BDServices {
             query.setParameter("termo", "%" + busca + "%");
             query.setParameter("id", busca);
             return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public static void atualizarEstoque(Produtos produtoAtualizado) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = null;
+
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+
+            Produtos produtoExistente = em.find(Produtos.class, produtoAtualizado.getIdProduto());
+            if (produtoExistente != null) {
+                produtoExistente.setEstoqueProduto(produtoAtualizado.getEstoqueProduto());
+            }
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    public static Produtos buscarProdutoPorNome(String nomeProduto) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            TypedQuery<Produtos> query = em.createQuery(
+                    "SELECT p FROM Produtos p WHERE p.nomeProduto = :nome", Produtos.class);
+            query.setParameter("nome", nomeProduto);
+
+            List<Produtos> resultado = query.getResultList();
+            return resultado.isEmpty() ? null : resultado.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         } finally {
             em.close();
         }

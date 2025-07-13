@@ -218,6 +218,27 @@ public class JTelaPagamentoPDV extends JFrame {
             if (urlPagamento != null) {
                 try {
                     Desktop.getDesktop().browse(new URI(urlPagamento));
+                    int resposta = JOptionPane.showConfirmDialog(this, "O pagamento foi confirmado?", "Confirmar Pagamento", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        for (int i = 0; i < tableModel.getRowCount(); i++) {
+                            String nome = tableModel.getValueAt(i, 0).toString();
+                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
+
+                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
+                            if (produto != null) {
+                                int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
+                                produto.setEstoqueProduto(novoEstoque);
+                                BDServices.atualizarEstoque(produto);
+                                JOptionPane.showMessageDialog(this, "Estoque atualizado com sucesso!");
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+                            }
+                        }
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+                    }
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
