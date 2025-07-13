@@ -231,15 +231,22 @@ public class JTelaPagamentoPDV extends JFrame {
                                 int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
                                 produto.setEstoqueProduto(novoEstoque);
                                 BDServices.atualizarEstoque(produto);
-                                JOptionPane.showMessageDialog(this, "Estoque atualizado com sucesso!");
                             } else {
                                 JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
                             }
                         }
+                        JOptionPane.showMessageDialog(this, "Estoque atualizado com sucesso!");
                     }
                     else {
                         JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
                     }
+
+                    int linhas = tableModel.getRowCount();
+                    for (int i = linhas - 1; i >= 0; i--) {
+                        tableModel.removeRow(i);
+                    }
+                    labelTotal.setText("Total da venda: R$ 0.00");
+                    btnNewButton.setEnabled(false);
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
