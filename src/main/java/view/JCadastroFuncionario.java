@@ -201,7 +201,8 @@ public class JCadastroFuncionario extends JFrame {
 					funcionario.setTelefone(telefone);
 
 					Usuario usuario = new Usuario();
-					String senhaCriptografada = BCrypt.hashpw(cpf, BCrypt.gensalt());
+					String cpfApenasDigitos = finalCampoCPF.getText().replaceAll("[^\\d]", "");
+					String senhaCriptografada = BCrypt.hashpw(cpfApenasDigitos, BCrypt.gensalt());
 					usuario.setSenhaUsuario(senhaCriptografada);
 					usuario.setNomeUsuario(nome);
 					usuario.setTelefoneUsuario(telefone);

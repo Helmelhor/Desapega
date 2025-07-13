@@ -92,7 +92,7 @@ public class BDServices {
         em.persist(funcionario);
         em.getTransaction().commit();
         em.close();
-        emf.close();
+        //emf.close();
     }
 
     public static List<Produtos> consultarTodosProdutos() {
@@ -102,13 +102,13 @@ public class BDServices {
         return produtos;
     }
 
-    public static boolean autenticar(String nomeUsuario, String senhaDigitada) {
+    public static boolean autenticar(String usuarioDigitado, String senhaDigitada) {
         EntityManager em = emf.createEntityManager();
 
         try {
             TypedQuery<Usuario> query = em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.nome = :nome", Usuario.class);
-            query.setParameter("nome", nomeUsuario);
+                    "SELECT u FROM Usuario u WHERE u.emailUsuario = :email", Usuario.class);
+            query.setParameter("email", usuarioDigitado);
 
             List<Usuario> resultado = query.getResultList();
 
