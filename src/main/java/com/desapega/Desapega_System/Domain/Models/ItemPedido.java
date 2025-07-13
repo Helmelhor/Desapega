@@ -22,6 +22,10 @@ public class ItemPedido {
     @Column(name = "valor_tota", nullable = false)
     private BigDecimal valorTotal;
 
+    @Column(name = "quantidade", nullable = false)
+    private int quantidade;
+
+
     //relacionamentos
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", nullable = false)

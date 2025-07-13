@@ -1,5 +1,8 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Models.ItemPedido;
+import com.desapega.Desapega_System.Domain.Models.Pedido;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
@@ -61,22 +65,57 @@ public class JFinancas extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Ent./Sa\u00EDda", "Data", "Produto", "Valor ", "Quantidade P."
-			}
+				new Object[][]{
+				},
+				new String[]{
+						"Ent./Sa\u00EDda", "Data", "Produto", "Valor ", "Quantidade P."
+				}
 		));
 
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(254, 270, 85, 21);
 		contentPane.add(btnVoltar);
 
-        btnVoltar.addActionListener(e ->{
+		btnVoltar.addActionListener(e -> {
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
 			dispose();
 		});
+		carregarDados();
+	}
 
+	private void carregarDados() {
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+		modelo.setRowCount(0);
+
+		List<Pedido> pedidos = com.desapega.Desapega_System.Services.BDServices.consultarTodosPedidos();
+
+		for (Pedido pedido : pedidos) {
+			String tipo = "Saída";
+			String data = pedido.getDataPedido().toString();
+			String produto = "";
+			double valorTotal = 0.0;
+			int quantidadeTotal = 0;
+
+			for (ItemPedido item : pedido.getItensPedido()) {
+				if (item.getProdutos() != null) {
+					produto += item.getProdutos().getNomeProduto() + ", ";
+					valorTotal += item.getProdutos().getPrecoProduto().doubleValue() * item.getQuantidade();
+					quantidadeTotal += item.getQuantidade();
+				}
+			}
+
+			if (produto.endsWith(", ")) {
+				produto = produto.substring(0, produto.length() - 2);
+			}
+
+			modelo.addRow(new Object[]{
+					tipo,
+					data,
+					produto,
+					String.format("R$ %.2f", valorTotal),
+					quantidadeTotal
+			});
+		}
 	}
 }

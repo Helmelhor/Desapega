@@ -86,6 +86,26 @@ public class BDServices {
         return item;
     }
 
+    //consultando todos os pedidos
+//    public static List<Pedido> consultarTodosPedidos() {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            List<Pedido> pedidos = em.createQuery("SELECT p FROM Pedido p LEFT JOIN FETCH p.itensPedido", Pedido.class).getResultList();
+//            return pedidos;
+//        } finally {
+//            em.close();
+//        }
+//    }
+    public static List<Pedido> consultarTodosPedidos() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM Pedido p", Pedido.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
     public static void adicionarFuncionario(Funcionario funcionario) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
