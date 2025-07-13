@@ -145,20 +145,31 @@ public class JCadastroProduto extends JFrame {
 					String descricao = textField_1.getText().trim();
 					int estoque = Integer.parseInt(textField_2.getText().trim());
 					BigDecimal preco = new BigDecimal(textField_4.getText().trim());
-					//BigDecimal preco = new BigDecimal(campoPreco.getText().trim());
-					//int estoque = Integer.parseInt(campoEstoque.getText().trim());
 
-					Produtos produto = new Produtos();
-					produto.setNomeProduto(nome);
-					produto.setDescricaoProduto(descricao);
-					produto.setPrecoProduto(preco);
-					produto.setEstoqueProduto(estoque);
-					produto.setDataCadastro(LocalDateTime.now());
-					//produto.setUsuario(usuarioLogado);
+					Produtos produtoExistente = BDServices.buscarProdutoPorNome(nome);
 
-					BDServices.adicionarProduto(produto);
+					if (produtoExistente != null) {
+						int novoEstoque = produtoExistente.getEstoqueProduto() + estoque;
+						produtoExistente.setEstoqueProduto(novoEstoque);
+						produtoExistente.setPrecoProduto(preco);
+						produtoExistente.setDescricaoProduto(descricao); // opcional
+						BDServices.atualizarEstoque(produtoExistente);
 
-					JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+						JOptionPane.showMessageDialog(null, "Produto já existia. Estoque e preço atualizados com sucesso!");
+
+					} else {
+						Produtos produto = new Produtos();
+						produto.setNomeProduto(nome);
+						produto.setDescricaoProduto(descricao);
+						produto.setPrecoProduto(preco);
+						produto.setEstoqueProduto(estoque);
+						produto.setDataCadastro(LocalDateTime.now());
+
+						BDServices.adicionarProduto(produto);
+
+						JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+					}
+
 					dispose();
 
 				} catch (Exception ex) {
