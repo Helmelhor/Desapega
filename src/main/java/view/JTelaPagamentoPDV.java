@@ -2,6 +2,8 @@ package view;
 
 import com.desapega.Desapega_System.Domain.Controllers.CriacaoPagamento;
 import com.desapega.Desapega_System.Domain.Models.PedidoPagamento;
+import com.desapega.Desapega_System.Domain.Models.Produtos;
+import com.desapega.Desapega_System.Services.BDServices;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +18,7 @@ import java.util.List;
 public class JTelaPagamentoPDV extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private final JTextField campoBusca;
+    private final JComboBox<Produtos> comboProdutos;
     private final JButton botaoAdicionar;
     private final JTable tabelaItens;
     private final DefaultTableModel tableModel;
@@ -67,9 +69,29 @@ public class JTelaPagamentoPDV extends JFrame {
         setContentPane(contentPane);
 
         JPanel painelNorte = new JPanel(new BorderLayout(5, 5));
-        painelNorte.add(new JLabel("Buscar produto (código ou nome):"), BorderLayout.NORTH);
-        campoBusca = new JTextField();
-        painelNorte.add(campoBusca, BorderLayout.CENTER);
+        painelNorte.add(new JLabel("Selecionar produto:"), BorderLayout.NORTH);
+
+        // Criar e configurar o JComboBox
+        comboProdutos = new JComboBox<>();
+        comboProdutos.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                if (value instanceof Produtos) {
+                    Produtos produto = (Produtos) value;
+                    value = produto.getNomeProduto() + " - R$ " + produto.getPrecoProduto();
+                }
+                return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            }
+        });
+
+        // Carregar produtos do banco
+        List<Produtos> produtos = BDServices.consultarTodosProdutos();
+        for (Produtos produto : produtos) {
+            comboProdutos.addItem(produto);
+        }
+
+        painelNorte.add(comboProdutos, BorderLayout.CENTER);
+
         botaoAdicionar = new JButton("Adicionar");
         painelNorte.add(botaoAdicionar, BorderLayout.EAST);
         contentPane.add(painelNorte, BorderLayout.NORTH);
@@ -90,22 +112,23 @@ public class JTelaPagamentoPDV extends JFrame {
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO trocar por busca real de produtos depois
-                String nome = "Produto Exemplo";
-                double precoUnitario = 10.0;
-                int quantidade = 1;
-                double total = precoUnitario * quantidade;
+                Produtos produtoSelecionado = (Produtos) comboProdutos.getSelectedItem();
+                if (produtoSelecionado != null) {
+                    String nome = produtoSelecionado.getNomeProduto();
+                    double precoUnitario = produtoSelecionado.getPrecoProduto().doubleValue();
+                    int quantidade = 1;
+                    double total = precoUnitario * quantidade;
 
-                tableModel.addRow(new Object[]{
-                        nome,
-                        String.format("R$ %.2f", precoUnitario),
-                        quantidade,
-                        String.format("R$ %.2f", total)
-                });
+                    tableModel.addRow(new Object[]{
+                            nome,
+                            String.format("R$ %.2f", precoUnitario),
+                            quantidade,
+                            String.format("R$ %.2f", total)
+                    });
 
-                atualizarTotal();
-
-                btnNewButton.setEnabled(true);
+                    atualizarTotal();
+                    btnNewButton.setEnabled(true);
+                }
             }
         });
 

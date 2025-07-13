@@ -122,4 +122,17 @@ public class BDServices {
         }
     }
 
+    public static List<Produtos> buscarProdutos(String busca) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT p FROM Produtos p WHERE LOWER(p.nomeProduto) LIKE LOWER(:termo) OR CAST(p.id AS string) = :id";
+            TypedQuery<Produtos> query = em.createQuery(jpql, Produtos.class);
+            query.setParameter("termo", "%" + busca + "%");
+            query.setParameter("id", busca);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }
