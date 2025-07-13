@@ -122,7 +122,7 @@ public class BDServices {
         return produtos;
     }
 
-    public static boolean autenticar(String usuarioDigitado, String senhaDigitada) {
+    public static Usuario autenticar(String usuarioDigitado, String senhaDigitada) {
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -132,11 +132,11 @@ public class BDServices {
 
             List<Usuario> resultado = query.getResultList();
 
-            if (!resultado.isEmpty()) {
-                Usuario usuario = resultado.get(0);
-                return BCrypt.checkpw(senhaDigitada, usuario.getSenhaUsuario());
+            Usuario usuario = resultado.get(0);
+            if (BCrypt.checkpw(senhaDigitada, usuario.getSenhaUsuario())) {
+                return usuario;
             }
-            return false;
+            return null;
         } finally {
             em.close();
         }

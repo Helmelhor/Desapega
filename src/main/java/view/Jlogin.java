@@ -1,6 +1,8 @@
 package view;
 
+import com.desapega.Desapega_System.Domain.Models.Usuario;
 import com.desapega.Desapega_System.Services.BDServices;
+import com.desapega.Desapega_System.Domain.Enum.TipoUsuario;
 
 import java.awt.EventQueue;
 
@@ -78,13 +80,18 @@ public class Jlogin extends JFrame {
         panel.add(btnNewButton);
 
         btnNewButton.addActionListener(e -> {
-            String usuario = textField.getText();
-            String senha = new String(passwordField.getPassword());
+            String usuarioDigitado = textField.getText();
+            String senhaDigitada = new String(passwordField.getPassword());
 
-            boolean autenticado = BDServices.autenticar(usuario, senha);
-            if (autenticado) {
-                JTelaPrincipal telaPrincipal = new JTelaPrincipal();
-                telaPrincipal.setVisible(true);
+            Usuario usuario = BDServices.autenticar(usuarioDigitado, senhaDigitada);
+            if (usuario != null) {
+                if (usuario.getTipo_usuario() == TipoUsuario.ADMIN) {
+                    JTelaPrincipal telaPrincipal = new JTelaPrincipal();
+                    telaPrincipal.setVisible(true);
+                } else if (usuario.getTipo_usuario() == TipoUsuario.USUARIO) {
+                    JTelaPagamentoPDV telaPagamento = new JTelaPagamentoPDV();
+                    telaPagamento.setVisible(true);
+                }
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
