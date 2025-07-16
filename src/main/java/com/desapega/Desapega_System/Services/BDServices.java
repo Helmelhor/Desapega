@@ -1,3 +1,4 @@
+
 package com.desapega.Desapega_System.Services;
 
 import com.desapega.Desapega_System.Domain.Models.*;
@@ -32,6 +33,17 @@ public class BDServices {
 //        EntityManager em = emf.createEntityManager();
 //        try {
 //            List<Pedido> pedidos = em.createQuery("SELECT p FROM Pedido p LEFT JOIN FETCH p.itensPedido", Pedido.class).getResultList();
+    // Retorna lista de nome e estoque dos produtos para o gráfico de pizza
+    public static List<Object[]> consultarNomeEEstoqueProdutos() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT p.nomeProduto, p.estoqueProduto FROM Produtos p";
+            TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 //            return pedidos;
 //        } finally {
 //            em.close();

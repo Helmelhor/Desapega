@@ -10,12 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JEditorPane;
+import view.components.GraficoPizzaProdutos;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 import java.util.List;
-import javax.swing.UIManager;
 
 public class JTelaPrincipal extends JFrame {
 
@@ -110,15 +109,13 @@ public class JTelaPrincipal extends JFrame {
 		list.setBounds(386, 111, 10, 0);
 		contentPane.add(list);
 
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBackground(UIManager.getColor("Button.light"));
-		editorPane.setBounds(196, 40, 323, 82);
-		contentPane.add(editorPane);
 
-		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBackground(UIManager.getColor("Button.light"));
-		editorPane_1.setBounds(196, 177, 337, 45);
-		contentPane.add(editorPane_1);
+		// Gráfico de Pizza de Produtos
+		GraficoPizzaProdutos graficoPizza = new GraficoPizzaProdutos();
+		graficoPizza.setBounds(196, 40, 323, 182);
+		contentPane.add(graficoPizza);
+
+		// (Removido editorPane_1, espaço agora é do gráfico)
 
 		JLabel lblDashboard = new JLabel("Dashboard");
 		lblDashboard.setFont(new Font("Tahoma", Font.BOLD, 14));
