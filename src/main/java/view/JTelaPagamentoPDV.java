@@ -8,9 +8,10 @@ import com.desapega.Desapega_System.Services.BDServices;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,13 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JButton botaoCancelar;
     private final JComboBox<String> comboFormaPagamento;
     private JButton btnNewButton;
+
+    // Paleta de cores
+    private final Color COLOR_BG = Color.decode("#153448");
+    private final Color COLOR_BTN = Color.decode("#3C5B6F");
+    private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões mais escuro
+    private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+    private final Color COLOR_PANEL = Color.decode("#948979");
 
     private void atualizarTotal() {
         double totalVenda = 0.0;
@@ -65,14 +73,22 @@ public class JTelaPagamentoPDV extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setBackground(COLOR_BG);
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(contentPane);
 
         JPanel painelNorte = new JPanel(new BorderLayout(5, 5));
-        painelNorte.add(new JLabel("Selecionar produto:"), BorderLayout.NORTH);
+        painelNorte.setBackground(COLOR_BG);
 
-        // Criar e configurar o JComboBox
+        JLabel lblSelecionar = new JLabel("Selecionar produto:");
+        lblSelecionar.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblSelecionar.setForeground(COLOR_LABEL);
+        painelNorte.add(lblSelecionar, BorderLayout.NORTH);
+
         comboProdutos = new JComboBox<>();
+        comboProdutos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        comboProdutos.setBackground(COLOR_PANEL);
+        comboProdutos.setForeground(COLOR_LABEL);
         comboProdutos.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -80,11 +96,14 @@ public class JTelaPagamentoPDV extends JFrame {
                     Produtos produto = (Produtos) value;
                     value = produto.getNomeProduto() + " - R$ " + produto.getPrecoProduto();
                 }
-                return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                lbl.setForeground(COLOR_LABEL);
+                lbl.setBackground(isSelected ? COLOR_BTN : COLOR_PANEL);
+                return lbl;
             }
         });
 
-        // Carrega somente produtos com estoque >= 1
         List<Produtos> produtos = BDServices.consultarTodosProdutos();
         for (Produtos produto : produtos) {
             if (produto.getEstoqueProduto() >= 1) {
@@ -94,13 +113,12 @@ public class JTelaPagamentoPDV extends JFrame {
 
         painelNorte.add(comboProdutos, BorderLayout.CENTER);
 
-        botaoAdicionar = new JButton("Adicionar");
+        botaoAdicionar = createModernButton("Adicionar");
         painelNorte.add(botaoAdicionar, BorderLayout.EAST);
         contentPane.add(painelNorte, BorderLayout.NORTH);
 
         String[] colunas = {"Nome", "Preço Unitário", "Qtd.", "Total"};
         tableModel = new DefaultTableModel(null, colunas) {
-
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -109,7 +127,18 @@ public class JTelaPagamentoPDV extends JFrame {
 
         tabelaItens = new JTable(tableModel);
         tabelaItens.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tabelaItens.setRowHeight(25);
+        tabelaItens.setRowHeight(28);
+
+        // Cabeçalho customizado com cor escura
+        JTableHeader header = tabelaItens.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        header.setBackground(COLOR_PANEL);
+        header.setForeground(COLOR_BG); // cor escura para o texto do cabeçalho
+
+        tabelaItens.setBackground(COLOR_PANEL);
+        tabelaItens.setForeground(COLOR_BG); // texto da tabela mais escuro
+        tabelaItens.setSelectionBackground(COLOR_BTN);
+        tabelaItens.setSelectionForeground(COLOR_BG); // texto selecionado mais escuro
 
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
@@ -160,19 +189,29 @@ public class JTelaPagamentoPDV extends JFrame {
         });
 
         JScrollPane scrollPane = new JScrollPane(tabelaItens);
+        scrollPane.getViewport().setBackground(COLOR_PANEL);
+        scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         JPanel painelSul = new JPanel(new BorderLayout(10, 10));
+        painelSul.setBackground(COLOR_BG);
+
         labelTotal = new JLabel("Total da venda: R$ 0.00");
-        labelTotal.setFont(new Font("Arial", Font.BOLD, 22));
+        labelTotal.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        labelTotal.setForeground(COLOR_LABEL);
         labelTotal.setHorizontalAlignment(SwingConstants.CENTER);
         painelSul.add(labelTotal, BorderLayout.NORTH);
 
         JPanel painelBotoesFinais = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        botaoCancelar = new JButton("Cancelar Venda");
+        painelBotoesFinais.setBackground(COLOR_BG);
+
+        botaoCancelar = createModernButton("Cancelar Venda");
         String[] formasPagamento = {"Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Pix"};
         comboFormaPagamento = new JComboBox<>(formasPagamento);
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
+        comboFormaPagamento.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        comboFormaPagamento.setBackground(COLOR_PANEL);
+        comboFormaPagamento.setForeground(COLOR_LABEL);
 
         botaoCancelar.addActionListener(new ActionListener() {
             @Override
@@ -186,8 +225,7 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
-        // NOVO: Botão Voltar para a tela principal
-        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoVoltar = createModernButton("Voltar");
         botaoVoltar.addActionListener(e -> {
             JTelaPrincipal telaPrincipal = new JTelaPrincipal();
             telaPrincipal.setVisible(true);
@@ -196,19 +234,20 @@ public class JTelaPagamentoPDV extends JFrame {
 
         painelBotoesFinais.add(botaoVoltar);
         painelBotoesFinais.add(botaoCancelar);
-        painelBotoesFinais.add(new JLabel("Forma de Pagamento:"));
+
+        JLabel lblFormaPagamento = new JLabel("Forma de Pagamento:");
+        lblFormaPagamento.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblFormaPagamento.setForeground(COLOR_LABEL);
+        painelBotoesFinais.add(lblFormaPagamento);
+
         painelBotoesFinais.add(comboFormaPagamento);
 
         painelSul.add(painelBotoesFinais, BorderLayout.SOUTH);
 
         contentPane.add(painelSul, BorderLayout.SOUTH);
 
-        btnNewButton = new JButton("Finalizar Compra");
+        btnNewButton = createModernButton("Finalizar Compra");
         btnNewButton.setEnabled(false);
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
         painelSul.add(btnNewButton, BorderLayout.CENTER);
 
         btnNewButton.addActionListener(e -> {
@@ -257,6 +296,19 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
+    }
+
+    // Botão moderno utilitário
+    private JButton createModernButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(COLOR_BTN);
+        btn.setForeground(COLOR_BTN_TEXT); // cor escura
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setHorizontalAlignment(SwingConstants.CENTER);
+        return btn;
     }
 
     public static void main(String[] args) {

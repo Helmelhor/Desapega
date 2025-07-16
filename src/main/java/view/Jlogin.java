@@ -5,10 +5,11 @@ import com.desapega.Desapega_System.Services.BDServices;
 import com.desapega.Desapega_System.Domain.Enum.TipoUsuario;
 
 import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Jlogin extends JFrame {
 
@@ -16,6 +17,15 @@ public class Jlogin extends JFrame {
     private JPanel contentPane;
     private JTextField textField;
     private JPasswordField passwordField;
+
+    // Paleta de cores
+    private final Color COLOR_BG = Color.decode("#153448");
+    private final Color COLOR_PANEL = Color.decode("#948979");
+    private final Color COLOR_BTN = Color.decode("#3C5B6F");
+    private final Color COLOR_BTN_TEXT = Color.decode("#153448");
+    private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+    private final Color COLOR_FIELD_BG = Color.decode("#DFD0B8");
+    private final Color COLOR_FIELD_TEXT = Color.decode("#153448");
 
     /**
      * Launch the application.
@@ -40,43 +50,62 @@ public class Jlogin extends JFrame {
      */
     public Jlogin() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 430, 320);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(176, 219, 156));
+        contentPane.setBackground(COLOR_BG);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(176, 219, 156));
-        panel.setBounds(82, 11, 254, 239);
-        contentPane.add(panel);
+        panel.setBackground(COLOR_PANEL);
+        panel.setBounds(60, 20, 300, 240);
         panel.setLayout(null);
+        contentPane.add(panel);
+
+        JLabel lblNewLabel_1 = new JLabel("Seja bem vindo!");
+        lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblNewLabel_1.setForeground(COLOR_BG); // cor escura
+        lblNewLabel_1.setBounds(70, 10, 180, 25);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblNewLabel_1);
 
         JLabel lblNewLabel = new JLabel("Login");
-        lblNewLabel.setBounds(84, 46, 56, 14);
+        lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblNewLabel.setForeground(COLOR_BG); // cor escura
+        lblNewLabel.setBounds(60, 50, 56, 20);
         panel.add(lblNewLabel);
 
         textField = new JTextField();
-        textField.setBounds(84, 74, 86, 20);
+        textField.setBounds(60, 75, 180, 28);
+        textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        textField.setBackground(COLOR_FIELD_BG);
+        textField.setForeground(COLOR_FIELD_TEXT);
+        textField.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
         panel.add(textField);
-        textField.setColumns(10);
 
         JLabel lblSenha = new JLabel("Senha");
-        lblSenha.setBounds(84, 105, 56, 14);
+        lblSenha.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblSenha.setForeground(COLOR_BG); // cor escura
+        lblSenha.setBounds(60, 110, 56, 20);
         panel.add(lblSenha);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(84, 130, 86, 20);
+        passwordField.setBounds(60, 135, 180, 28);
+        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        passwordField.setBackground(COLOR_FIELD_BG);
+        passwordField.setForeground(COLOR_FIELD_TEXT);
+        passwordField.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
         panel.add(passwordField);
 
-        JLabel lblNewLabel_1 = new JLabel("Seja bem vindo!");
-        lblNewLabel_1.setBounds(84, 11, 111, 14);
-        panel.add(lblNewLabel_1);
-
         JButton btnNewButton = new JButton("Entrar");
-        btnNewButton.setBounds(84, 170, 89, 23);
+        btnNewButton.setBounds(60, 180, 180, 32);
+        btnNewButton.setBackground(COLOR_BTN);
+        btnNewButton.setForeground(COLOR_BTN_TEXT);
+        btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnNewButton.setFocusPainted(false);
+        btnNewButton.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+        btnNewButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panel.add(btnNewButton);
 
         btnNewButton.addActionListener(e -> {

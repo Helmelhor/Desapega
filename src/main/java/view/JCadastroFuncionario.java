@@ -24,6 +24,15 @@ public class JCadastroFuncionario extends JFrame {
 	private JTextField preencherEmail;
 	private JFormattedTextField preencherTelefone;
 
+	// Paleta de cores
+	private final Color COLOR_BG = Color.decode("#153448");
+	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
+	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_PANEL = Color.decode("#948979");
+	private final Color COLOR_FIELD_BG = Color.decode("#DFD0B8");
+	private final Color COLOR_FIELD_TEXT = Color.decode("#153448");
+
 	/**
 	 * Launch the application.
 	 */
@@ -49,121 +58,154 @@ public class JCadastroFuncionario extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(COLOR_BG);
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
 		JPanel panel = new JPanel();
+		panel.setBackground(COLOR_PANEL);
 		panel.setBounds(10, 10, 664, 640);
-		contentPane.add(panel);
 		panel.setLayout(null);
+		contentPane.add(panel);
 
 		JLabel lblCadastrarFuncionario = new JLabel("Cadastrar funcionário");
-		lblCadastrarFuncionario.setBounds(187, 5, 290, 38);
-		lblCadastrarFuncionario.setFont(new Font("Tahoma", Font.PLAIN, 31));
+		lblCadastrarFuncionario.setBounds(120, 5, 420, 38);
+		lblCadastrarFuncionario.setFont(new Font("Segoe UI", Font.BOLD, 32));
+		lblCadastrarFuncionario.setForeground(COLOR_BG);
+		lblCadastrarFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblCadastrarFuncionario);
 
-		preencherNome = new JTextField();
-		preencherNome.setBounds(36, 127, 400, 20);
-		panel.add(preencherNome);
-		preencherNome.setColumns(10);
-
 		JLabel lblNome = new JLabel("Nome Completo");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNome.setBounds(36, 102, 114, 14);
+		lblNome.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNome.setForeground(COLOR_LABEL);
+		lblNome.setBounds(36, 102, 180, 20);
 		panel.add(lblNome);
 
+		preencherNome = new JTextField();
+		preencherNome.setBounds(36, 127, 400, 28);
+		preencherNome.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		preencherNome.setBackground(COLOR_FIELD_BG);
+		preencherNome.setForeground(COLOR_FIELD_TEXT);
+		preencherNome.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
+		panel.add(preencherNome);
+
 		JLabel lblCpf = new JLabel("CPF:");
-		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCpf.setBounds(36, 170, 100, 14);
+		lblCpf.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblCpf.setForeground(COLOR_LABEL);
+		lblCpf.setBounds(36, 170, 100, 20);
 		panel.add(lblCpf);
 
 		JFormattedTextField campoCPF = null;
-
 		try {
 			MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
 			cpfMask.setPlaceholderCharacter('_');
 			campoCPF = new JFormattedTextField(cpfMask);
-			campoCPF.setBounds(36, 195, 269, 20);
+			campoCPF.setBounds(36, 195, 269, 28);
+			campoCPF.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			campoCPF.setBackground(COLOR_FIELD_BG);
+			campoCPF.setForeground(COLOR_FIELD_TEXT);
+			campoCPF.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
 			panel.add(campoCPF);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		//Código para as datas de nascimento
+		JLabel lblDataNascimento = new JLabel("Data de Nascimento");
+		lblDataNascimento.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblDataNascimento.setForeground(COLOR_LABEL);
+		lblDataNascimento.setBounds(36, 242, 180, 20);
+		panel.add(lblDataNascimento);
 
 		JComboBox dataNascimento = new JComboBox();
-		dataNascimento.setBounds(36, 267, 43, 22);
+		dataNascimento.setBounds(36, 267, 43, 28);
+		dataNascimento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		dataNascimento.setBackground(COLOR_FIELD_BG);
+		dataNascimento.setForeground(COLOR_FIELD_TEXT);
 		panel.add(dataNascimento);
-
-		for (int data = 01; data <= 31; data++) {
-            dataNascimento.addItem(data);
+		for (int data = 1; data <= 31; data++) {
+			dataNascimento.addItem(data);
 		}
 
 		JComboBox mesNascimento = new JComboBox();
-		mesNascimento.setBounds(89, 267, 43, 22);
+		mesNascimento.setBounds(89, 267, 43, 28);
+		mesNascimento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mesNascimento.setBackground(COLOR_FIELD_BG);
+		mesNascimento.setForeground(COLOR_FIELD_TEXT);
 		panel.add(mesNascimento);
-		for (int mes = 01; mes <= 12; mes++) {
-            mesNascimento.addItem(mes);
+		for (int mes = 1; mes <= 12; mes++) {
+			mesNascimento.addItem(mes);
 		}
 
-
-        JComboBox anoNascimento = new JComboBox<>();
-        anoNascimento.setBounds(142, 267, 80, 22);
-        for (int ano = 2025; ano >= 1900; ano--) {
-            anoNascimento.addItem(ano);
-
-
+		JComboBox anoNascimento = new JComboBox<>();
+		anoNascimento.setBounds(142, 267, 80, 28);
+		anoNascimento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		anoNascimento.setBackground(COLOR_FIELD_BG);
+		anoNascimento.setForeground(COLOR_FIELD_TEXT);
+		for (int ano = 2025; ano >= 1900; ano--) {
+			anoNascimento.addItem(ano);
 		}
-        panel.add(anoNascimento);
+		panel.add(anoNascimento);
 
-        JLabel lblDataNascimento = new JLabel("Data de Nascimento");
-        lblDataNascimento.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblDataNascimento.setBounds(36, 242, 146, 14);
-        panel.add(lblDataNascimento);
+		JLabel lblSexo = new JLabel("Sexo");
+		lblSexo.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblSexo.setForeground(COLOR_LABEL);
+		lblSexo.setBounds(36, 316, 46, 20);
+		panel.add(lblSexo);
 
-        JLabel lblSexo = new JLabel("Sexo");
-        lblSexo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblSexo.setBounds(36, 316, 46, 14);
-        panel.add(lblSexo);
+		JComboBox BoxSexo = new JComboBox();
+		BoxSexo.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
+		BoxSexo.setBounds(36, 341, 120, 28);
+		BoxSexo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		BoxSexo.setBackground(COLOR_FIELD_BG);
+		BoxSexo.setForeground(COLOR_FIELD_TEXT);
+		panel.add(BoxSexo);
 
-        JComboBox BoxSexo = new JComboBox();
-        BoxSexo.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
-        BoxSexo.setBounds(36, 341, 96, 22);
-        panel.add(BoxSexo);
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblEmail.setForeground(COLOR_LABEL);
+		lblEmail.setBounds(36, 393, 80, 20);
+		panel.add(lblEmail);
 
-        JLabel lblEmail = new JLabel("Email");
-        lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblEmail.setBounds(36, 393, 46, 14);
-        panel.add(lblEmail);
+		preencherEmail = new JTextField();
+		preencherEmail.setBounds(36, 418, 269, 28);
+		preencherEmail.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		preencherEmail.setBackground(COLOR_FIELD_BG);
+		preencherEmail.setForeground(COLOR_FIELD_TEXT);
+		preencherEmail.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
+		panel.add(preencherEmail);
 
-        preencherEmail = new JTextField();
-        preencherEmail.setBounds(36, 418, 269, 20);
-        panel.add(preencherEmail);
-        preencherEmail.setColumns(10);
+		JLabel lblTelefone = new JLabel("Telefone/Celular");
+		lblTelefone.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblTelefone.setForeground(COLOR_LABEL);
+		lblTelefone.setBounds(33, 469, 180, 20);
+		panel.add(lblTelefone);
 
 		try {
 			MaskFormatter telefoneMask = new MaskFormatter("(##)#####-####");
 			telefoneMask.setPlaceholderCharacter('_');
 			preencherTelefone = new JFormattedTextField(telefoneMask);
-			preencherTelefone.setBounds(36, 494, 186, 20);
+			preencherTelefone.setBounds(36, 494, 186, 28);
+			preencherTelefone.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			preencherTelefone.setBackground(COLOR_FIELD_BG);
+			preencherTelefone.setForeground(COLOR_FIELD_TEXT);
+			preencherTelefone.setBorder(BorderFactory.createLineBorder(COLOR_BG, 1, true));
 			panel.add(preencherTelefone);
 			preencherTelefone.setColumns(10);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		JLabel lblTelefone = new JLabel("Telefone/Celular");
-        lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblTelefone.setBounds(33, 469, 114, 14);
-        panel.add(lblTelefone);
-
 		JButton btnAdicionar = new JButton("Adicionar");
-        btnAdicionar.setForeground(new Color(255, 255, 255));
-        btnAdicionar.setBackground(new Color(45, 60, 215));
-        btnAdicionar.setBounds(300, 585, 89, 23);
-        panel.add(btnAdicionar);
+		btnAdicionar.setBackground(COLOR_BTN);
+		btnAdicionar.setForeground(COLOR_BTN_TEXT);
+		btnAdicionar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnAdicionar.setFocusPainted(false);
+		btnAdicionar.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+		btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnAdicionar.setBounds(300, 585, 120, 32);
+		panel.add(btnAdicionar);
 
 		JFormattedTextField finalCampoCPF = campoCPF;
 
@@ -239,17 +281,20 @@ public class JCadastroFuncionario extends JFrame {
 			}
 		});
 
-		panel.add(btnAdicionar);
-
 		JButton btnVoltar = new JButton("Voltar");
-        btnVoltar.setBounds(22, 21, 73, 23);
-        panel.add(btnVoltar);
+		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setForeground(COLOR_BTN_TEXT);
+		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btnVoltar.setFocusPainted(false);
+		btnVoltar.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+		btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnVoltar.setBounds(22, 21, 90, 28);
+		panel.add(btnVoltar);
 
 		btnVoltar.addActionListener(e ->{
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
 			dispose();
 		});
-
 	}
 }

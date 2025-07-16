@@ -4,22 +4,33 @@ import com.desapega.Desapega_System.Domain.Models.Produtos;
 import com.desapega.Desapega_System.Services.BDServices;
 
 import java.awt.EventQueue;
-
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Cursor;
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.swing.JList;
 import view.components.GraficoPizzaProdutos;
 import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class JTelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+
+	// Cores da paleta
+	private final Color COLOR_BG = Color.decode("#153448");
+	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN_TEXT = Color.WHITE;
+	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_GRAPH_BG = Color.decode("#948979");
 
 	/**
 	 * Launch the application.
@@ -44,88 +55,103 @@ public class JTelaPrincipal extends JFrame {
 	 */
 	public JTelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 621, 305);
+		setBounds(100, 100, 700, 350);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.LIGHT_GRAY);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(COLOR_BG);
+		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
-		JButton btnCaixa = new JButton("Caixa");
-		btnCaixa.setBounds(10, 10, 153, 33);
-		contentPane.add(btnCaixa);
+		Font btnFont = new Font("Segoe UI", Font.BOLD, 15);
 
+		// Botão customizado
+		JButton btnCaixa = createModernButton("Caixa");
+		btnCaixa.setBounds(20, 30, 180, 40);
+		contentPane.add(btnCaixa);
 		btnCaixa.addActionListener(e -> {
 			JTelaPagamentoPDV caixa = new JTelaPagamentoPDV();
 			caixa.setVisible(true);
 			dispose();
 		});
 
-		JButton btnCadastrarProduto = new JButton("Cadastrar Produto");
-		btnCadastrarProduto.setBounds(10, 53, 153, 34);
+		JButton btnCadastrarProduto = createModernButton("Cadastrar Produto");
+		btnCadastrarProduto.setBounds(20, 80, 180, 40);
 		contentPane.add(btnCadastrarProduto);
-
 		btnCadastrarProduto.addActionListener(e -> {
 			JCadastroProduto cadastroProduto = new JCadastroProduto();
 			cadastroProduto.setVisible(true);
 			dispose();
 		});
 
-		JButton btnCadastrarFuncionario = new JButton("Cadastrar Funcionário");
-		btnCadastrarFuncionario.setBounds(10, 97, 153, 40);
+		JButton btnCadastrarFuncionario = createModernButton("Cadastrar Funcionário");
+		btnCadastrarFuncionario.setBounds(20, 130, 180, 40);
 		contentPane.add(btnCadastrarFuncionario);
-
 		btnCadastrarFuncionario.addActionListener(e ->{
 			JCadastroFuncionario cadastroFuncionario = new JCadastroFuncionario();
 			cadastroFuncionario.setVisible(true);
 			dispose();
 		});
 
-		JButton btnEstoque = new JButton("Estoque");
-		btnEstoque.setBounds(10, 146, 153, 35);
+		JButton btnEstoque = createModernButton("Estoque");
+		btnEstoque.setBounds(20, 180, 180, 40);
 		contentPane.add(btnEstoque);
-
 		btnEstoque.addActionListener(e -> {
 			List<Produtos> listaProdutos = BDServices.consultarTodosProdutos();
 			JEstoque estoqueProdutos = new JEstoque(listaProdutos);
-			//JEstoqueProdutos estoqueProdutos = new JEstoqueProdutos();
 			estoqueProdutos.setVisible(true);
 			dispose();
 		});
 
-		JButton btnFinancas = new JButton("Finanças");
-		btnFinancas.setBounds(10, 191, 153, 31);
+		JButton btnFinancas = createModernButton("Finanças");
+		btnFinancas.setBounds(20, 230, 180, 40);
 		contentPane.add(btnFinancas);
-
 		btnFinancas.addActionListener(e -> {
 			JFinancas financas= new JFinancas();
 			financas.setVisible(true);
 			dispose();
 		});
 
-		JList list = new JList();
-		list.setBounds(386, 111, 10, 0);
-		contentPane.add(list);
-
-
 		// Gráfico de Pizza de Produtos
+		JPanel graphPanel = new JPanel();
+		graphPanel.setBackground(COLOR_GRAPH_BG);
+		graphPanel.setBounds(230, 60, 420, 220);
+		graphPanel.setLayout(null);
+		graphPanel.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+		contentPane.add(graphPanel);
+
 		GraficoPizzaProdutos graficoPizza = new GraficoPizzaProdutos();
-		graficoPizza.setBounds(196, 40, 323, 182);
-		contentPane.add(graficoPizza);
+		graficoPizza.setBounds(10, 10, 400, 200);
+		graphPanel.add(graficoPizza);
 
-		// (Removido editorPane_1, espaço agora é do gráfico)
-
+		// Título Dashboard
 		JLabel lblDashboard = new JLabel("Dashboard");
-		lblDashboard.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDashboard.setBounds(196, 20, 94, 13);
+		lblDashboard.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblDashboard.setForeground(COLOR_LABEL);
+		lblDashboard.setBounds(230, 20, 200, 30);
 		contentPane.add(lblDashboard);
 
+		// Subtítulo Desempenho semanal
 		JLabel lblDesempenhoSemanal = new JLabel("Desempenho semanal");
-		lblDesempenhoSemanal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDesempenhoSemanal.setBounds(196, 157, 143, 13);
+		lblDesempenhoSemanal.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lblDesempenhoSemanal.setForeground(COLOR_LABEL);
+		lblDesempenhoSemanal.setBounds(230, 285, 200, 20);
 		contentPane.add(lblDesempenhoSemanal);
 
+	}
+
+	// Método utilitário para criar botões modernos
+	private JButton createModernButton(String text) {
+		JButton btn = new JButton(text);
+		btn.setBackground(COLOR_BTN);
+		btn.setForeground(COLOR_BTN_TEXT);
+		btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btn.setFocusPainted(false);
+		// Substitui createRoundBorder por LineBorder com cantos arredondados
+		btn.setBorder(new LineBorder(COLOR_LABEL, 2, true));
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btn.setHorizontalAlignment(SwingConstants.CENTER);
+		return btn;
 	}
 }

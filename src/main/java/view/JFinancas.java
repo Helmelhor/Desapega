@@ -3,24 +3,28 @@ package view;
 import com.desapega.Desapega_System.Domain.Models.ItemPedido;
 import com.desapega.Desapega_System.Domain.Models.Pedido;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.util.List;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
+import javax.swing.table.JTableHeader;
+
+import java.util.List;
 
 public class JFinancas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+
+	// Paleta de cores
+	private final Color COLOR_BG = Color.decode("#153448");
+	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
+	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_PANEL = Color.decode("#948979");
 
 	/**
 	 * Launch the application.
@@ -48,32 +52,56 @@ public class JFinancas extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 342);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(COLOR_BG);
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
-		JLabel lblResumoFinanceiro = new JLabel("Resumo Finaceiro");
-		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblResumoFinanceiro.setBounds(216, 10, 137, 22);
+		JLabel lblResumoFinanceiro = new JLabel("Resumo Financeiro");
+		lblResumoFinanceiro.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblResumoFinanceiro.setForeground(COLOR_LABEL);
+		lblResumoFinanceiro.setBounds(180, 10, 250, 28);
+		lblResumoFinanceiro.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblResumoFinanceiro);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 53, 534, 207);
+		scrollPane.setBackground(COLOR_PANEL);
+		scrollPane.getViewport().setBackground(COLOR_PANEL);
+		scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
 		contentPane.add(scrollPane);
 
 		table = new JTable();
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		table.setRowHeight(26);
+		table.setBackground(COLOR_PANEL);
+		table.setForeground(COLOR_BG); // texto escuro
+		table.setSelectionBackground(COLOR_BTN);
+		table.setSelectionForeground(COLOR_BG);
+
+		JTableHeader header = table.getTableHeader();
+		header.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		header.setBackground(COLOR_PANEL);
+		header.setForeground(COLOR_BG); // cabeçalho escuro
+
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 				new Object[][]{
 				},
 				new String[]{
-						"Ent./Sa\u00EDda", "Data", "Produto", "Valor ", "Quantidade P."
+						"Ent./Saída", "Data", "Produto", "Valor ", "Quantidade P."
 				}
 		));
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(254, 270, 85, 21);
+		btnVoltar.setBounds(254, 270, 100, 30);
+		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setForeground(COLOR_BTN_TEXT);
+		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnVoltar.setFocusPainted(false);
+		btnVoltar.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+		btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnVoltar);
 
 		btnVoltar.addActionListener(e -> {
