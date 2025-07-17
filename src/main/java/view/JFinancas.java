@@ -22,7 +22,7 @@ public class JFinancas extends JFrame {
 	// Paleta de cores
 	private final Color COLOR_BG = Color.decode("#153448");
 	private final Color COLOR_BTN = Color.decode("#3C5B6F");
-	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
+	private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões escuro
 	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
 	private final Color COLOR_PANEL = Color.decode("#948979");
 
@@ -97,7 +97,7 @@ public class JFinancas extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(254, 270, 100, 30);
 		btnVoltar.setBackground(COLOR_BTN);
-		btnVoltar.setForeground(COLOR_BTN_TEXT);
+		btnVoltar.setForeground(COLOR_BTN_TEXT); // texto escuro
 		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnVoltar.setFocusPainted(false);
 		btnVoltar.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
