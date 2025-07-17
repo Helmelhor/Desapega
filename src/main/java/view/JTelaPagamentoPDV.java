@@ -269,9 +269,8 @@ public class JTelaPagamentoPDV extends JFrame {
         btnFinalizarCompra = createModernButton("Finalizar Compra");
         btnFinalizarCompra.setEnabled(false);
         painelSul.add(btnFinalizarCompra, BorderLayout.CENTER);
-
         btnFinalizarCompra.addActionListener(e -> {
-            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
+            List<PedidoPagamento.Item> itensPagamento = montarItensParaPagamento();
 
             CriacaoPagamento pagamentoController = new CriacaoPagamento();
             String urlPagamento = pagamentoController.criarPagamentoComItens(itensPagamento);
@@ -288,13 +287,10 @@ public class JTelaPagamentoPDV extends JFrame {
                     );
 
                     if (resposta == JOptionPane.YES_OPTION) {
-                        // -----------------------------
-                        // AGRUPAMENTO DE ITENS POR PRODUTO
-                        // -----------------------------
+                        // ✅ DECLARAÇÃO CORRETA DO MAP PARA AGRUPAMENTO
                         Map<Long, ItemPedido> itensAgrupados = new HashMap<>();
                         BigDecimal totalPedido = BigDecimal.ZERO;
 
-                        // percorre os itens da tabela para agrupar
                         for (int i = 0; i < tableModel.getRowCount(); i++) {
                             String nomeProduto = tableModel.getValueAt(i, 0).toString();
                             int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
@@ -307,7 +303,7 @@ public class JTelaPagamentoPDV extends JFrame {
 
                             Produtos produto = BDServices.buscarProdutoPorNome(nomeProduto);
                             if (produto != null) {
-                                // Atualiza estoque
+                                // Atualiza o estoque do produto
                                 int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
                                 produto.setEstoqueProduto(novoEstoque);
                                 BDServices.atualizarEstoque(produto);
@@ -315,12 +311,14 @@ public class JTelaPagamentoPDV extends JFrame {
                                 // Agrupa por id_produto
                                 ItemPedido existente = itensAgrupados.get(produto.getIdProduto());
                                 if (existente == null) {
+                                    // ainda não existe, cria um novo
                                     ItemPedido item = new ItemPedido();
                                     item.setProduto(produto);
                                     item.setQuantidade(quantidadeComprada);
                                     item.setValorTotal(precoUnit.multiply(BigDecimal.valueOf(quantidadeComprada)));
                                     itensAgrupados.put(produto.getIdProduto(), item);
                                 } else {
+                                    // já existe, apenas acumula
                                     existente.setQuantidade(existente.getQuantidade() + quantidadeComprada);
                                     existente.setValorTotal(
                                             existente.getValorTotal()
@@ -330,29 +328,25 @@ public class JTelaPagamentoPDV extends JFrame {
                             }
                         }
 
-                        // -----------------------------
-                        // CRIA O PEDIDO E VINCULA ITENS AGRUPADOS
-                        // -----------------------------
+                        // Cria o pedido
                         Pedido pedido = new Pedido();
                         pedido.setDataPedido(LocalDateTime.now());
-                        pedido.setItensPedido(new ArrayList<>(itensAgrupados.values()));
 
-                        // calcula o total
+                        // Associa os itens e calcula o total
                         for (ItemPedido item : itensAgrupados.values()) {
-                            item.setPedido(pedido); // vínculo ManyToOne
+                            item.setPedido(pedido); // ManyToOne
                             totalPedido = totalPedido.add(item.getValorTotal());
                         }
 
+                        pedido.setItensPedido(new ArrayList<>(itensAgrupados.values()));
                         pedido.setValorTotal(totalPedido);
 
-                        // salva tudo de uma vez com cascade
+                        // Persiste de uma vez com cascade
                         BDServices.adicionarPedido(pedido);
 
-                        JOptionPane.showMessageDialog(this,
-                                "Estoque atualizado e pedido registrado com sucesso!");
+                        JOptionPane.showMessageDialog(this, "Estoque atualizado e pedido registrado com sucesso!");
                     } else {
-                        JOptionPane.showMessageDialog(this,
-                                "Venda cancelada. Nenhum estoque alterado.");
+                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
                     }
 
                     // Limpa tabela e reseta total
@@ -365,12 +359,10 @@ public class JTelaPagamentoPDV extends JFrame {
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this,
-                            "Erro ao abrir o navegador para pagamento.");
+                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this,
-                        "Erro ao criar link de pagamento.");
+                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
             }
         });
 
