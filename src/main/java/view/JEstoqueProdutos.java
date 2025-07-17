@@ -60,7 +60,7 @@ public class JEstoqueProdutos extends JFrame {
 
 	// Paleta de cores
 	private final Color COLOR_BG = Color.decode("#153448");
-	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN = Color.decode("#F5F5DC"); // fundo dos botões mais claro (bege)
 	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
 	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
 	private final Color COLOR_PANEL = Color.decode("#948979");
@@ -148,7 +148,7 @@ public class JEstoqueProdutos extends JFrame {
 
 		JButton btnNewButton = new JButton("Salvar");
 		btnNewButton.setBounds(273, 399, 89, 30);
-		btnNewButton.setBackground(COLOR_BTN);
+		btnNewButton.setBackground(COLOR_BTN); // fundo mais claro
 		btnNewButton.setForeground(COLOR_BTN_TEXT);
 		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnNewButton.setFocusPainted(false);
@@ -491,7 +491,7 @@ public class JEstoqueProdutos extends JFrame {
 
 		btnNewButton_1 = new JButton("Adicionar");
 		btnNewButton_1.setBounds(89, 399, 100, 30);
-		btnNewButton_1.setBackground(COLOR_BTN);
+		btnNewButton_1.setBackground(COLOR_BTN); // fundo mais claro
 		btnNewButton_1.setForeground(COLOR_BTN_TEXT);
 		btnNewButton_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnNewButton_1.setFocusPainted(false);
@@ -501,7 +501,7 @@ public class JEstoqueProdutos extends JFrame {
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(1, 11, 83, 28);
-		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setBackground(COLOR_BTN); // fundo mais claro
 		btnVoltar.setForeground(COLOR_BTN_TEXT);
 		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnVoltar.setFocusPainted(false);
