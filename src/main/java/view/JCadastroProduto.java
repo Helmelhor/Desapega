@@ -185,7 +185,7 @@ public class JCadastroProduto extends JFrame {
 		btnVoltar.addActionListener(e -> {
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
-			dispose();
+			
 		});
 
 		btnSalvar.addActionListener(new ActionListener() {

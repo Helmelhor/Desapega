@@ -82,7 +82,6 @@ public class JTelaPrincipal extends JFrame {
 		btnCadastrarProduto.addActionListener(e -> {
 			JCadastroProduto cadastroProduto = new JCadastroProduto();
 			cadastroProduto.setVisible(true);
-			dispose();
 		});
 
 		JButton btnCadastrarFuncionario = createModernButton("Cadastrar Funcionário");
