@@ -30,6 +30,7 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JTable tabelaItens;
     private final DefaultTableModel tableModel;
     private final JLabel labelTotal;
+    private final JLabel labelSubtotal; // Adicione este atributo
     private final JButton botaoCancelar;
     private final JComboBox<String> comboFormaPagamento;
     private JButton btnFinalizarCompra;
@@ -44,12 +45,13 @@ public class JTelaPagamentoPDV extends JFrame {
     private final Color COLOR_HEADER_TEXT = Color.decode("#153448"); // texto do cabeçalho escuro
 
     private void atualizarTotal() {
-        double totalVenda = 0.0;
+        double subtotal = 0.0;
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             String valor = tableModel.getValueAt(i, 3).toString().replace("R$", "").trim().replace(",", ".");
-            totalVenda += Double.parseDouble(valor);
+            subtotal += Double.parseDouble(valor);
         }
-        labelTotal.setText(String.format("Total da venda: R$ %.2f", totalVenda));
+        labelSubtotal.setText(String.format("Subtotal: R$ %.2f", subtotal));
+        labelTotal.setText(String.format("Total da venda: R$ %.2f", subtotal));
     }
 
     private List<PedidoPagamento.Item> montarItensParaPagamento() {
@@ -204,11 +206,19 @@ public class JTelaPagamentoPDV extends JFrame {
         JPanel painelSul = new JPanel(new BorderLayout(10, 10));
         painelSul.setBackground(COLOR_BG);
 
+        // Subtotal
+        labelSubtotal = new JLabel("Subtotal: R$ 0.00");
+        labelSubtotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        labelSubtotal.setForeground(COLOR_BTN); // cor #F5F5DC
+        labelSubtotal.setHorizontalAlignment(SwingConstants.CENTER);
+        painelSul.add(labelSubtotal, BorderLayout.NORTH);
+
+        // Total
         labelTotal = new JLabel("Total da venda: R$ 0.00");
         labelTotal.setFont(new Font("Segoe UI", Font.BOLD, 22));
         labelTotal.setForeground(COLOR_LABEL); // branco
         labelTotal.setHorizontalAlignment(SwingConstants.CENTER);
-        painelSul.add(labelTotal, BorderLayout.NORTH);
+        painelSul.add(labelTotal, BorderLayout.CENTER);
 
         JPanel painelBotoesFinais = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         painelBotoesFinais.setBackground(COLOR_BG);
@@ -240,6 +250,7 @@ public class JTelaPagamentoPDV extends JFrame {
                     tableModel.removeRow(i);
                 }
                 labelTotal.setText("Total da venda: R$ 0.00");
+                labelSubtotal.setText("Subtotal: R$ 0.00");
                 btnFinalizarCompra.setEnabled(false);
             }
         });
@@ -355,6 +366,7 @@ public class JTelaPagamentoPDV extends JFrame {
                         tableModel.removeRow(i);
                     }
                     labelTotal.setText("Total da venda: R$ 0.00");
+                    labelSubtotal.setText("Subtotal: R$ 0.00");
                     btnFinalizarCompra.setEnabled(false);
 
                 } catch (Exception ex) {
