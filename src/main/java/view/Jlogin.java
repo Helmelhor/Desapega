@@ -21,7 +21,7 @@ public class Jlogin extends JFrame {
     // Paleta de cores
     private final Color COLOR_BG = Color.decode("#153448");
     private final Color COLOR_PANEL = Color.decode("#948979");
-    private final Color COLOR_BTN = Color.decode("#3C5B6F");
+    private final Color COLOR_BTN = Color.decode("#F5F5DC"); // fundo do botão mais claro (bege)
     private final Color COLOR_BTN_TEXT = Color.decode("#153448");
     private final Color COLOR_LABEL = Color.decode("#DFD0B8");
     private final Color COLOR_FIELD_BG = Color.decode("#DFD0B8");
@@ -100,7 +100,7 @@ public class Jlogin extends JFrame {
 
         JButton btnNewButton = new JButton("Entrar");
         btnNewButton.setBounds(60, 180, 180, 32);
-        btnNewButton.setBackground(COLOR_BTN);
+        btnNewButton.setBackground(COLOR_BTN); // fundo mais claro
         btnNewButton.setForeground(COLOR_BTN_TEXT);
         btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnNewButton.setFocusPainted(false);
