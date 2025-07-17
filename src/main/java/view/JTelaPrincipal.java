@@ -32,6 +32,7 @@ public class JTelaPrincipal extends JFrame {
 	private final Color COLOR_LABEL = Color.decode("#153448"); // texto dos labels escuro
 	private final Color COLOR_GRAPH_BG = Color.decode("#948979");
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +41,8 @@ public class JTelaPrincipal extends JFrame {
 			public void run() {
 				try {
 					JTelaPrincipal frame = new JTelaPrincipal();
-					//centralizando a tela
+					GraficoPizzaProdutos graficoPizza = new GraficoPizzaProdutos();
+					graficoPizza.atualizarDados();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -90,6 +92,7 @@ public class JTelaPrincipal extends JFrame {
 		btnCadastrarProduto.addActionListener(e -> {
 			JCadastroProduto cadastroProduto = new JCadastroProduto();
 			cadastroProduto.setVisible(true);
+			dispose();
 		});
 
 		JButton btnCadastrarFuncionario = createModernButton("Cadastrar Funcionário");

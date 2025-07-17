@@ -185,7 +185,7 @@ public class JCadastroProduto extends JFrame {
 		btnVoltar.addActionListener(e -> {
 			JTelaPrincipal telaHome = new JTelaPrincipal();
 			telaHome.setVisible(true);
-			
+			dispose();
 		});
 
 		btnSalvar.addActionListener(new ActionListener() {
@@ -221,7 +221,14 @@ public class JCadastroProduto extends JFrame {
 						JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
 					}
 
-					dispose();
+					textField.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+					textField_3.setText("");
+					textField_4.setText("");
+					textField_5.setText("");
+
+					//dispose();
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
