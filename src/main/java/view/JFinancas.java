@@ -114,12 +114,17 @@ public class JFinancas extends JFrame {
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		modelo.setRowCount(0);
 
+		// Cria o formatter para o formato desejado
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 		// Consulta todos os pedidos no banco
 		List<Pedido> pedidos = BDServices.consultarTodosPedidos();
 
 		for (Pedido pedido : pedidos) {
 			String tipo = "Saída"; // Ex.: pode ser alterado futuramente
-			String data = pedido.getDataPedido().toString();
+			// Usa o formatter para formatar a data
+			String data = pedido.getDataPedido().format(formatter);
+
 			StringBuilder produtosConcat = new StringBuilder();
 			double valorTotal = 0.0;
 			int quantidadeTotal = 0;
