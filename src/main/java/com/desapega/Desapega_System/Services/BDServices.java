@@ -155,7 +155,6 @@ public class BDServices {
             throw e;
         } finally {
             em.close();
-            emf.close();
         }
     }
 
