@@ -28,11 +28,6 @@ public class BDServices {
         em.close();
     }
 
-    //consultando todos os pedidos
-//    public static List<Pedido> consultarTodosPedidos() {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            List<Pedido> pedidos = em.createQuery("SELECT p FROM Pedido p LEFT JOIN FETCH p.itensPedido", Pedido.class).getResultList();
     // Retorna lista de nome e estoque dos produtos para o gráfico de pizza
     public static List<Object[]> consultarNomeEEstoqueProdutos() {
         EntityManager em = emf.createEntityManager();
@@ -44,15 +39,35 @@ public class BDServices {
             em.close();
         }
     }
-//            return pedidos;
+
+//    public static List<Pedido> consultarTodosPedidos() {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            return em.createQuery("SELECT p FROM Pedido p", Pedido.class).getResultList();
 //        } finally {
 //            em.close();
 //        }
 //    }
+
+//    public static List<Pedido> consultarTodosPedidos() {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            return em.createQuery(
+//                    "SELECT DISTINCT p FROM Pedido p LEFT JOIN FETCH p.itensPedido", Pedido.class
+//            ).getResultList();
+//        } finally {
+//            em.close();
+//        }
+//    }
+
     public static List<Pedido> consultarTodosPedidos() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT p FROM Pedido p", Pedido.class).getResultList();
+            return em.createQuery(
+                    "SELECT DISTINCT p FROM Pedido p " +
+                            "LEFT JOIN FETCH p.itensPedido i " +
+                            "LEFT JOIN FETCH i.produto", Pedido.class
+            ).getResultList();
         } finally {
             em.close();
         }
