@@ -64,6 +64,14 @@ public class JTelaPrincipal extends JFrame {
 
 		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
+		// Título principal do sistema alinhado ao gráfico
+		JLabel lblTituloSistema = new JLabel("Elevate technology");
+		lblTituloSistema.setFont(new Font("Segoe UI", Font.BOLD, 28));
+		lblTituloSistema.setForeground(COLOR_BTN); // cor clara, diferente do fundo
+		lblTituloSistema.setBounds(230, 0, 420, 40); // alinhado ao gráfico
+		lblTituloSistema.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblTituloSistema);
+
 		Font btnFont = new Font("Segoe UI", Font.BOLD, 15);
 
 		// Botão customizado
