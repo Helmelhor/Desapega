@@ -40,26 +40,6 @@ public class BDServices {
         }
     }
 
-//    public static List<Pedido> consultarTodosPedidos() {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            return em.createQuery("SELECT p FROM Pedido p", Pedido.class).getResultList();
-//        } finally {
-//            em.close();
-//        }
-//    }
-
-//    public static List<Pedido> consultarTodosPedidos() {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            return em.createQuery(
-//                    "SELECT DISTINCT p FROM Pedido p LEFT JOIN FETCH p.itensPedido", Pedido.class
-//            ).getResultList();
-//        } finally {
-//            em.close();
-//        }
-//    }
-
     public static List<Pedido> consultarTodosPedidos() {
         EntityManager em = emf.createEntityManager();
         try {
@@ -79,7 +59,6 @@ public class BDServices {
         em.persist(funcionario);
         em.getTransaction().commit();
         em.close();
-        //emf.close();
     }
 
     public static List<Produtos> consultarTodosProdutos() {
