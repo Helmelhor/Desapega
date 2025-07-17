@@ -27,9 +27,9 @@ public class JTelaPrincipal extends JFrame {
 
 	// Cores da paleta
 	private final Color COLOR_BG = Color.decode("#153448");
-	private final Color COLOR_BTN = Color.decode("#3C5B6F");
-	private final Color COLOR_BTN_TEXT = Color.WHITE;
-	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_BTN = Color.decode("#F5F5DC"); // fundo dos botões mais claro (bege)
+	private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões escuro
+	private final Color COLOR_LABEL = Color.decode("#153448"); // texto dos labels escuro
 	private final Color COLOR_GRAPH_BG = Color.decode("#948979");
 
 	/**
@@ -128,14 +128,14 @@ public class JTelaPrincipal extends JFrame {
 		// Título Dashboard
 		JLabel lblDashboard = new JLabel("Dashboard");
 		lblDashboard.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblDashboard.setForeground(COLOR_LABEL);
+		lblDashboard.setForeground(COLOR_LABEL); // escuro
 		lblDashboard.setBounds(230, 20, 200, 30);
 		contentPane.add(lblDashboard);
 
 		// Subtítulo Desempenho semanal
 		JLabel lblDesempenhoSemanal = new JLabel("Desempenho semanal");
 		lblDesempenhoSemanal.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		lblDesempenhoSemanal.setForeground(COLOR_LABEL);
+		lblDesempenhoSemanal.setForeground(COLOR_LABEL); // escuro
 		lblDesempenhoSemanal.setBounds(230, 285, 200, 20);
 		contentPane.add(lblDesempenhoSemanal);
 
@@ -144,8 +144,8 @@ public class JTelaPrincipal extends JFrame {
 	// Método utilitário para criar botões modernos
 	private JButton createModernButton(String text) {
 		JButton btn = new JButton(text);
-		btn.setBackground(COLOR_BTN);
-		btn.setForeground(COLOR_BTN_TEXT);
+		btn.setBackground(COLOR_BTN); // fundo mais claro
+		btn.setForeground(COLOR_BTN_TEXT); // texto escuro
 		btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btn.setFocusPainted(false);
 		// Substitui createRoundBorder por LineBorder com cantos arredondados

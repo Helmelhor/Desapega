@@ -31,9 +31,11 @@ public class JTelaPagamentoPDV extends JFrame {
     // Paleta de cores
     private final Color COLOR_BG = Color.decode("#153448");
     private final Color COLOR_BTN = Color.decode("#3C5B6F");
-    private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões mais escuro
-    private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+    private final Color COLOR_BTN_TEXT = Color.decode("#FFFFFF"); // texto dos botões branco
+    private final Color COLOR_LABEL = Color.decode("#FFFFFF"); // texto dos labels branco
     private final Color COLOR_PANEL = Color.decode("#948979");
+    private final Color COLOR_TABLE_TEXT = Color.decode("#FFFFFF"); // texto da tabela branco
+    private final Color COLOR_HEADER_TEXT = Color.decode("#FFFFFF"); // texto do cabeçalho branco
 
     private void atualizarTotal() {
         double totalVenda = 0.0;
@@ -82,13 +84,13 @@ public class JTelaPagamentoPDV extends JFrame {
 
         JLabel lblSelecionar = new JLabel("Selecionar produto:");
         lblSelecionar.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblSelecionar.setForeground(COLOR_LABEL);
+        lblSelecionar.setForeground(COLOR_LABEL); // branco
         painelNorte.add(lblSelecionar, BorderLayout.NORTH);
 
         comboProdutos = new JComboBox<>();
         comboProdutos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         comboProdutos.setBackground(COLOR_PANEL);
-        comboProdutos.setForeground(COLOR_LABEL);
+        comboProdutos.setForeground(COLOR_LABEL); // branco
         comboProdutos.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -98,7 +100,7 @@ public class JTelaPagamentoPDV extends JFrame {
                 }
                 JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-                lbl.setForeground(COLOR_LABEL);
+                lbl.setForeground(COLOR_LABEL); // branco
                 lbl.setBackground(isSelected ? COLOR_BTN : COLOR_PANEL);
                 return lbl;
             }
@@ -133,12 +135,12 @@ public class JTelaPagamentoPDV extends JFrame {
         JTableHeader header = tabelaItens.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
         header.setBackground(COLOR_PANEL);
-        header.setForeground(COLOR_BG); // cor escura para o texto do cabeçalho
+        header.setForeground(COLOR_HEADER_TEXT); // texto do cabeçalho branco
 
         tabelaItens.setBackground(COLOR_PANEL);
-        tabelaItens.setForeground(COLOR_BG); // texto da tabela mais escuro
+        tabelaItens.setForeground(COLOR_TABLE_TEXT); // texto da tabela branco
         tabelaItens.setSelectionBackground(COLOR_BTN);
-        tabelaItens.setSelectionForeground(COLOR_BG); // texto selecionado mais escuro
+        tabelaItens.setSelectionForeground(COLOR_TABLE_TEXT); // texto selecionado branco
 
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
@@ -198,7 +200,7 @@ public class JTelaPagamentoPDV extends JFrame {
 
         labelTotal = new JLabel("Total da venda: R$ 0.00");
         labelTotal.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        labelTotal.setForeground(COLOR_LABEL);
+        labelTotal.setForeground(COLOR_LABEL); // branco
         labelTotal.setHorizontalAlignment(SwingConstants.CENTER);
         painelSul.add(labelTotal, BorderLayout.NORTH);
 
@@ -211,7 +213,7 @@ public class JTelaPagamentoPDV extends JFrame {
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
         comboFormaPagamento.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         comboFormaPagamento.setBackground(COLOR_PANEL);
-        comboFormaPagamento.setForeground(COLOR_LABEL);
+        comboFormaPagamento.setForeground(COLOR_LABEL); // branco
 
         botaoCancelar.addActionListener(new ActionListener() {
             @Override
@@ -237,7 +239,7 @@ public class JTelaPagamentoPDV extends JFrame {
 
         JLabel lblFormaPagamento = new JLabel("Forma de Pagamento:");
         lblFormaPagamento.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        lblFormaPagamento.setForeground(COLOR_LABEL);
+        lblFormaPagamento.setForeground(COLOR_LABEL); // branco
         painelBotoesFinais.add(lblFormaPagamento);
 
         painelBotoesFinais.add(comboFormaPagamento);
@@ -302,7 +304,7 @@ public class JTelaPagamentoPDV extends JFrame {
     private JButton createModernButton(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(COLOR_BTN);
-        btn.setForeground(COLOR_BTN_TEXT); // cor escura
+        btn.setForeground(COLOR_BTN_TEXT); // texto branco
         btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
