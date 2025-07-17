@@ -4,18 +4,15 @@ import com.desapega.Desapega_System.Domain.Models.ItemPedido;
 import com.desapega.Desapega_System.Domain.Models.Pedido;
 import com.desapega.Desapega_System.Services.BDServices;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.util.List;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
+import javax.swing.table.JTableHeader;
+
+import java.util.List;
 
 public class JFinancas extends JFrame {
 
@@ -23,6 +20,16 @@ public class JFinancas extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 
+	// Paleta de cores
+	private final Color COLOR_BG = Color.decode("#153448");
+	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões escuro
+	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_PANEL = Color.decode("#948979");
+
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
@@ -35,35 +42,63 @@ public class JFinancas extends JFrame {
 		});
 	}
 
+	/**
+	 * Create the frame.
+	 */
 	public JFinancas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 400);
+		setBounds(100, 100, 612, 342);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(COLOR_BG);
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
 
 		JLabel lblResumoFinanceiro = new JLabel("Resumo Financeiro");
-		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblResumoFinanceiro.setBounds(250, 10, 200, 30);
+		lblResumoFinanceiro.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblResumoFinanceiro.setForeground(COLOR_LABEL);
+		lblResumoFinanceiro.setBounds(180, 10, 250, 28);
+		lblResumoFinanceiro.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblResumoFinanceiro);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 53, 630, 250);
+		scrollPane.setBounds(26, 53, 534, 207);
+		scrollPane.setBackground(COLOR_PANEL);
+		scrollPane.getViewport().setBackground(COLOR_PANEL);
+		scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
 		contentPane.add(scrollPane);
 
 		table = new JTable();
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		table.setRowHeight(26);
+		table.setBackground(COLOR_PANEL);
+		table.setForeground(COLOR_BG); // texto escuro
+		table.setSelectionBackground(COLOR_BTN);
+		table.setSelectionForeground(COLOR_BG);
+
+		JTableHeader header = table.getTableHeader();
+		header.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		header.setBackground(COLOR_PANEL);
+		header.setForeground(COLOR_BG); // cabeçalho escuro
+
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
-				new Object[][]{},
+				new Object[][]{
+				},
 				new String[]{
-						"Tipo", "Data", "Produto(s)", "Valor Total", "Qtd Total"
+						"Ent./Saída", "Data", "Produto", "Valor ", "Quantidade P."
 				}
 		));
-		scrollPane.setViewportView(table);
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(300, 320, 100, 25);
+		btnVoltar.setBounds(254, 270, 100, 30);
+		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setForeground(COLOR_BTN_TEXT); // texto escuro
+		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnVoltar.setFocusPainted(false);
+		btnVoltar.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+		btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnVoltar);
 
 		btnVoltar.addActionListener(e -> {
@@ -71,7 +106,6 @@ public class JFinancas extends JFrame {
 			telaHome.setVisible(true);
 			dispose();
 		});
-
 		carregarDados();
 	}
 
@@ -89,7 +123,6 @@ public class JFinancas extends JFrame {
 			double valorTotal = 0.0;
 			int quantidadeTotal = 0;
 
-			// Itera sobre os itens já relacionados ao pedido
 			for (ItemPedido item : pedido.getItensPedido()) {
 				if (item.getProduto() != null) {
 					produtosConcat.append(item.getProduto().getNomeProduto()).append(", ");

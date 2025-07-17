@@ -10,9 +10,10 @@ import com.desapega.Desapega_System.Services.BDServices;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -32,6 +33,15 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JButton botaoCancelar;
     private final JComboBox<String> comboFormaPagamento;
     private JButton btnFinalizarCompra;
+
+    // Paleta de cores
+    private final Color COLOR_BG = Color.decode("#153448");
+    private final Color COLOR_BTN = Color.decode("#F5F5DC"); // botões mais claros
+    private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões escuro
+    private final Color COLOR_LABEL = Color.decode("#153448"); // texto dos labels escuro
+    private final Color COLOR_PANEL = Color.decode("#948979");
+    private final Color COLOR_TABLE_TEXT = Color.decode("#153448"); // texto da tabela escuro
+    private final Color COLOR_HEADER_TEXT = Color.decode("#153448"); // texto do cabeçalho escuro
 
     private void atualizarTotal() {
         double totalVenda = 0.0;
@@ -71,14 +81,22 @@ public class JTelaPagamentoPDV extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setBackground(COLOR_BG);
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(contentPane);
 
         JPanel painelNorte = new JPanel(new BorderLayout(5, 5));
-        painelNorte.add(new JLabel("Selecionar produto:"), BorderLayout.NORTH);
+        painelNorte.setBackground(COLOR_BG);
 
-        // Criar e configurar o JComboBox
+        JLabel lblSelecionar = new JLabel("Selecionar produto:");
+        lblSelecionar.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblSelecionar.setForeground(COLOR_LABEL); // branco
+        painelNorte.add(lblSelecionar, BorderLayout.NORTH);
+
         comboProdutos = new JComboBox<>();
+        comboProdutos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        comboProdutos.setBackground(COLOR_PANEL);
+        comboProdutos.setForeground(COLOR_LABEL); // branco
         comboProdutos.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -86,11 +104,14 @@ public class JTelaPagamentoPDV extends JFrame {
                     Produtos produto = (Produtos) value;
                     value = produto.getNomeProduto() + " - R$ " + produto.getPrecoProduto();
                 }
-                return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                lbl.setForeground(COLOR_LABEL); // branco
+                lbl.setBackground(isSelected ? COLOR_BTN : COLOR_PANEL);
+                return lbl;
             }
         });
 
-        // Carrega somente produtos com estoque >= 1
         List<Produtos> produtos = BDServices.consultarTodosProdutos();
         for (Produtos produto : produtos) {
             if (produto.getEstoqueProduto() >= 1) {
@@ -100,13 +121,12 @@ public class JTelaPagamentoPDV extends JFrame {
 
         painelNorte.add(comboProdutos, BorderLayout.CENTER);
 
-        botaoAdicionar = new JButton("Adicionar");
+        botaoAdicionar = createModernButton("Adicionar");
         painelNorte.add(botaoAdicionar, BorderLayout.EAST);
         contentPane.add(painelNorte, BorderLayout.NORTH);
 
         String[] colunas = {"Nome", "Preço Unitário", "Qtd.", "Total"};
         tableModel = new DefaultTableModel(null, colunas) {
-
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -115,7 +135,18 @@ public class JTelaPagamentoPDV extends JFrame {
 
         tabelaItens = new JTable(tableModel);
         tabelaItens.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tabelaItens.setRowHeight(25);
+        tabelaItens.setRowHeight(28);
+
+        // Cabeçalho customizado com cor escura
+        JTableHeader header = tabelaItens.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        header.setBackground(COLOR_PANEL);
+        header.setForeground(COLOR_HEADER_TEXT); // texto do cabeçalho escuro
+
+        tabelaItens.setBackground(COLOR_PANEL);
+        tabelaItens.setForeground(COLOR_TABLE_TEXT); // texto da tabela escuro
+        tabelaItens.setSelectionBackground(COLOR_BTN);
+        tabelaItens.setSelectionForeground(COLOR_TABLE_TEXT); // texto selecionado escuro
 
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
@@ -166,19 +197,40 @@ public class JTelaPagamentoPDV extends JFrame {
         });
 
         JScrollPane scrollPane = new JScrollPane(tabelaItens);
+        scrollPane.getViewport().setBackground(COLOR_PANEL);
+        scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         JPanel painelSul = new JPanel(new BorderLayout(10, 10));
+        painelSul.setBackground(COLOR_BG);
+
         labelTotal = new JLabel("Total da venda: R$ 0.00");
-        labelTotal.setFont(new Font("Arial", Font.BOLD, 22));
+        labelTotal.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        labelTotal.setForeground(COLOR_LABEL); // branco
         labelTotal.setHorizontalAlignment(SwingConstants.CENTER);
         painelSul.add(labelTotal, BorderLayout.NORTH);
 
         JPanel painelBotoesFinais = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        botaoCancelar = new JButton("Cancelar Venda");
+        painelBotoesFinais.setBackground(COLOR_BG);
+
+        botaoCancelar = createModernButton("Cancelar Venda");
+        botaoCancelar.setForeground(COLOR_BTN_TEXT); // texto escuro
         String[] formasPagamento = {"Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Pix"};
         comboFormaPagamento = new JComboBox<>(formasPagamento);
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
+        comboFormaPagamento.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        comboFormaPagamento.setBackground(COLOR_PANEL);
+        comboFormaPagamento.setForeground(COLOR_LABEL); // texto escuro
+        comboFormaPagamento.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                lbl.setForeground(COLOR_LABEL); // texto escuro
+                lbl.setBackground(isSelected ? COLOR_BTN : COLOR_PANEL);
+                return lbl;
+            }
+        });
 
         botaoCancelar.addActionListener(new ActionListener() {
             @Override
@@ -192,8 +244,8 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
-        // NOVO: Botão Voltar para a tela principal
-        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoVoltar = createModernButton("Voltar");
+        botaoVoltar.setForeground(COLOR_BTN_TEXT); // texto escuro
         botaoVoltar.addActionListener(e -> {
             JTelaPrincipal telaPrincipal = new JTelaPrincipal();
             telaPrincipal.setVisible(true);
@@ -202,172 +254,24 @@ public class JTelaPagamentoPDV extends JFrame {
 
         painelBotoesFinais.add(botaoVoltar);
         painelBotoesFinais.add(botaoCancelar);
-        painelBotoesFinais.add(new JLabel("Forma de Pagamento:"));
+
+        JLabel lblFormaPagamento = new JLabel("Forma de Pagamento:");
+        lblFormaPagamento.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblFormaPagamento.setForeground(COLOR_LABEL); // branco
+        painelBotoesFinais.add(lblFormaPagamento);
+
         painelBotoesFinais.add(comboFormaPagamento);
 
         painelSul.add(painelBotoesFinais, BorderLayout.SOUTH);
 
         contentPane.add(painelSul, BorderLayout.SOUTH);
 
-        btnFinalizarCompra = new JButton("Finalizar Compra");
+        btnFinalizarCompra = createModernButton("Finalizar Compra");
         btnFinalizarCompra.setEnabled(false);
-        btnFinalizarCompra.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
         painelSul.add(btnFinalizarCompra, BorderLayout.CENTER);
 
-//        btnFinalizarCompra.addActionListener(e -> {
-//            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
-//
-//            CriacaoPagamento pagamentoController = new CriacaoPagamento();
-//            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
-//
-//            if (urlPagamento != null) {
-//                try {
-//                    Desktop.getDesktop().browse(new URI(urlPagamento));
-//                    int resposta = JOptionPane.showConfirmDialog(this, "O pagamento foi confirmado?", "Confirmar Pagamento", JOptionPane.YES_NO_OPTION);
-//                    if (resposta == JOptionPane.YES_OPTION) {
-//                        List<ItemPedido> itensPedido = new ArrayList<>();
-//                        for (int i = 0; i < tableModel.getRowCount(); i++) {
-//                            String nome = tableModel.getValueAt(i, 0).toString();
-//                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
-//                            double precoUnit = Double.parseDouble(
-//                                    tableModel.getValueAt(i, 1).toString()
-//                                            .replace("R$", "")
-//                                            .replace(",", ".")
-//                                            .trim()
-//                            );
-//
-//                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
-//                            if (produto != null) {
-//                                int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
-//                                produto.setEstoqueProduto(novoEstoque);
-//                                BDServices.atualizarEstoque(produto);
-//
-//                                ItemPedido itemPedido = new ItemPedido();
-//                                itemPedido.setProdutos(produto);
-//                                itemPedido.setPedido(null);
-//                                itemPedido.setQuantidade(quantidadeComprada);
-//                                itemPedido.setValorTotal(BigDecimal.valueOf(precoUnit * quantidadeComprada));
-//
-//                                itensPedido.add(itemPedido);
-//
-//                            } else {
-//                                JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
-//                            }
-//
-//                        }
-//                        JOptionPane.showMessageDialog(this, "Estoque e pedido atualizados com sucesso!");
-//                    }
-//                    else {
-//                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
-//                    }
-//
-//                    int linhas = tableModel.getRowCount();
-//                    for (int i = linhas - 1; i >= 0; i--) {
-//                        tableModel.removeRow(i);
-//                    }
-//                    labelTotal.setText("Total da venda: R$ 0.00");
-//                    btnFinalizarCompra.setEnabled(false);
-//
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
-//            }
-//        });
-
-//        btnFinalizarCompra.addActionListener(e -> {
-//            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
-//
-//            CriacaoPagamento pagamentoController = new CriacaoPagamento();
-//            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
-//
-//            if (urlPagamento != null) {
-//                try {
-//                    Desktop.getDesktop().browse(new URI(urlPagamento));
-//                    int resposta = JOptionPane.showConfirmDialog(this,
-//                            "O pagamento foi confirmado?",
-//                            "Confirmar Pagamento",
-//                            JOptionPane.YES_NO_OPTION);
-//
-//                    if (resposta == JOptionPane.YES_OPTION) {
-//                        // Lista para construir os itens do pedido
-//                        List<ItemPedido> itensPedido = new ArrayList<>();
-//
-//                        for (int i = 0; i < tableModel.getRowCount(); i++) {
-//                            String nome = tableModel.getValueAt(i, 0).toString();
-//                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
-//                            double precoUnit = Double.parseDouble(
-//                                    tableModel.getValueAt(i, 1).toString()
-//                                            .replace("R$", "")
-//                                            .replace(",", ".")
-//                                            .trim()
-//                            );
-//
-//                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
-//                            if (produto != null) {
-//                                // Atualiza estoque
-//                                int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
-//                                produto.setEstoqueProduto(novoEstoque);
-//                                BDServices.atualizarEstoque(produto);
-//                                long id_produto = produto.getIdProduto();
-//
-//                                // Cria o item de pedido
-//                                ItemPedido itemPedido = new ItemPedido();
-//                                itemPedido.setId_pedido(null); // será setado após criar o pedido
-//                                itemPedido.setId_produto(id_produto);
-//                                itemPedido.setQuantidade(quantidadeComprada);
-//                                itemPedido.setValorTotal(BigDecimal.valueOf(precoUnit * quantidadeComprada));
-//
-//                                itensPedido.add(itemPedido);
-//                            }
-//                        }
-//
-//                        // Cria o pedido com os itens
-//                        Pedido pedido = new Pedido();
-//                        pedido.setDataPedido(LocalDateTime.now());
-//                        pedido.setValorTotal(
-//                                itensPedido.stream()
-//                                        .map(ItemPedido::getValorTotal)
-//                                        .reduce(BigDecimal.ZERO, BigDecimal::add)
-//                        );
-//
-//                        //adiciona todos os itens um por um
-//                        for (ItemPedido ip : itensPedido) {
-//                            BDServices.adicionarItensPedido(ip);
-//                        }
-//
-//                        BDServices.adicionarPedido(pedido);
-//
-//
-//                        JOptionPane.showMessageDialog(this, "Estoque atualizado e pedido registrado com sucesso!");
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
-//                    }
-//
-//                    // Limpa tabela e reseta total
-//                    int linhas = tableModel.getRowCount();
-//                    for (int i = linhas - 1; i >= 0; i--) {
-//                        tableModel.removeRow(i);
-//                    }
-//                    labelTotal.setText("Total da venda: R$ 0.00");
-//                    btnFinalizarCompra.setEnabled(false);
-//
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
-//            }
-//        });
-
         btnFinalizarCompra.addActionListener(e -> {
-            List<PedidoPagamento.Item> itensPagamento = montarItensParaPagamento();
+            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
 
             CriacaoPagamento pagamentoController = new CriacaoPagamento();
             String urlPagamento = pagamentoController.criarPagamentoComItens(itensPagamento);
@@ -472,6 +376,19 @@ public class JTelaPagamentoPDV extends JFrame {
 
 
 
+    }
+
+    // Botão moderno utilitário
+    private JButton createModernButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(COLOR_BTN);
+        btn.setForeground(COLOR_BTN_TEXT); // texto escuro
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setHorizontalAlignment(SwingConstants.CENTER);
+        return btn;
     }
 
     public static void main(String[] args) {
