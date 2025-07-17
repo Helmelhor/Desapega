@@ -26,9 +26,9 @@ public class JCadastroFuncionario extends JFrame {
 
 	// Paleta de cores
 	private final Color COLOR_BG = Color.decode("#153448");
-	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN = Color.decode("#F5F5DC"); // fundo dos botões mais claro (bege)
 	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
-	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
+	private final Color COLOR_LABEL = Color.decode("#153448"); // texto dos labels escuro
 	private final Color COLOR_PANEL = Color.decode("#948979");
 	private final Color COLOR_FIELD_BG = Color.decode("#DFD0B8");
 	private final Color COLOR_FIELD_TEXT = Color.decode("#153448");
@@ -79,7 +79,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblNome = new JLabel("Nome Completo");
 		lblNome.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNome.setForeground(COLOR_LABEL);
+		lblNome.setForeground(COLOR_LABEL); // escuro
 		lblNome.setBounds(36, 102, 180, 20);
 		panel.add(lblNome);
 
@@ -93,7 +93,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblCpf = new JLabel("CPF:");
 		lblCpf.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblCpf.setForeground(COLOR_LABEL);
+		lblCpf.setForeground(COLOR_LABEL); // escuro
 		lblCpf.setBounds(36, 170, 100, 20);
 		panel.add(lblCpf);
 
@@ -114,7 +114,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblDataNascimento = new JLabel("Data de Nascimento");
 		lblDataNascimento.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblDataNascimento.setForeground(COLOR_LABEL);
+		lblDataNascimento.setForeground(COLOR_LABEL); // escuro
 		lblDataNascimento.setBounds(36, 242, 180, 20);
 		panel.add(lblDataNascimento);
 
@@ -150,7 +150,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblSexo = new JLabel("Sexo");
 		lblSexo.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblSexo.setForeground(COLOR_LABEL);
+		lblSexo.setForeground(COLOR_LABEL); // escuro
 		lblSexo.setBounds(36, 316, 46, 20);
 		panel.add(lblSexo);
 
@@ -164,7 +164,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblEmail.setForeground(COLOR_LABEL);
+		lblEmail.setForeground(COLOR_LABEL); // escuro
 		lblEmail.setBounds(36, 393, 80, 20);
 		panel.add(lblEmail);
 
@@ -178,7 +178,7 @@ public class JCadastroFuncionario extends JFrame {
 
 		JLabel lblTelefone = new JLabel("Telefone/Celular");
 		lblTelefone.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblTelefone.setForeground(COLOR_LABEL);
+		lblTelefone.setForeground(COLOR_LABEL); // escuro
 		lblTelefone.setBounds(33, 469, 180, 20);
 		panel.add(lblTelefone);
 
@@ -198,7 +198,7 @@ public class JCadastroFuncionario extends JFrame {
 		}
 
 		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBackground(COLOR_BTN);
+		btnAdicionar.setBackground(COLOR_BTN); // fundo mais claro
 		btnAdicionar.setForeground(COLOR_BTN_TEXT);
 		btnAdicionar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnAdicionar.setFocusPainted(false);
@@ -282,7 +282,7 @@ public class JCadastroFuncionario extends JFrame {
 		});
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setBackground(COLOR_BTN); // fundo mais claro
 		btnVoltar.setForeground(COLOR_BTN_TEXT);
 		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnVoltar.setFocusPainted(false);

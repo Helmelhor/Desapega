@@ -27,7 +27,7 @@ public class JCadastroProduto extends JFrame {
 
 	// Paleta de cores
 	private final Color COLOR_BG = Color.decode("#153448");
-	private final Color COLOR_BTN = Color.decode("#3C5B6F");
+	private final Color COLOR_BTN = Color.decode("#F5F5DC"); // fundo dos botões mais claro (bege)
 	private final Color COLOR_BTN_TEXT = Color.decode("#153448");
 	private final Color COLOR_LABEL = Color.decode("#DFD0B8");
 	private final Color COLOR_PANEL = Color.decode("#948979");
@@ -163,7 +163,7 @@ public class JCadastroProduto extends JFrame {
 		panel.add(textField_5);
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBackground(COLOR_BTN);
+		btnSalvar.setBackground(COLOR_BTN); // fundo mais claro
 		btnSalvar.setForeground(COLOR_BTN_TEXT);
 		btnSalvar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnSalvar.setFocusPainted(false);
@@ -173,7 +173,7 @@ public class JCadastroProduto extends JFrame {
 		panel.add(btnSalvar);
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBackground(COLOR_BTN);
+		btnVoltar.setBackground(COLOR_BTN); // fundo mais claro
 		btnVoltar.setForeground(COLOR_BTN_TEXT);
 		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnVoltar.setFocusPainted(false);
