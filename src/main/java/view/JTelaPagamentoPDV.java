@@ -374,8 +374,6 @@ public class JTelaPagamentoPDV extends JFrame {
             }
         });
 
-
-
     }
 
     // Botão moderno utilitário
