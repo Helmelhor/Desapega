@@ -30,12 +30,12 @@ public class JTelaPagamentoPDV extends JFrame {
 
     // Paleta de cores
     private final Color COLOR_BG = Color.decode("#153448");
-    private final Color COLOR_BTN = Color.decode("#3C5B6F");
-    private final Color COLOR_BTN_TEXT = Color.decode("#FFFFFF"); // texto dos botões branco
-    private final Color COLOR_LABEL = Color.decode("#FFFFFF"); // texto dos labels branco
+    private final Color COLOR_BTN = Color.decode("#F5F5DC"); // botões mais claros
+    private final Color COLOR_BTN_TEXT = Color.decode("#153448"); // texto dos botões escuro
+    private final Color COLOR_LABEL = Color.decode("#153448"); // texto dos labels escuro
     private final Color COLOR_PANEL = Color.decode("#948979");
-    private final Color COLOR_TABLE_TEXT = Color.decode("#FFFFFF"); // texto da tabela branco
-    private final Color COLOR_HEADER_TEXT = Color.decode("#FFFFFF"); // texto do cabeçalho branco
+    private final Color COLOR_TABLE_TEXT = Color.decode("#153448"); // texto da tabela escuro
+    private final Color COLOR_HEADER_TEXT = Color.decode("#153448"); // texto do cabeçalho escuro
 
     private void atualizarTotal() {
         double totalVenda = 0.0;
@@ -135,12 +135,12 @@ public class JTelaPagamentoPDV extends JFrame {
         JTableHeader header = tabelaItens.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
         header.setBackground(COLOR_PANEL);
-        header.setForeground(COLOR_HEADER_TEXT); // texto do cabeçalho branco
+        header.setForeground(COLOR_HEADER_TEXT); // texto do cabeçalho escuro
 
         tabelaItens.setBackground(COLOR_PANEL);
-        tabelaItens.setForeground(COLOR_TABLE_TEXT); // texto da tabela branco
+        tabelaItens.setForeground(COLOR_TABLE_TEXT); // texto da tabela escuro
         tabelaItens.setSelectionBackground(COLOR_BTN);
-        tabelaItens.setSelectionForeground(COLOR_TABLE_TEXT); // texto selecionado branco
+        tabelaItens.setSelectionForeground(COLOR_TABLE_TEXT); // texto selecionado escuro
 
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
@@ -208,12 +208,23 @@ public class JTelaPagamentoPDV extends JFrame {
         painelBotoesFinais.setBackground(COLOR_BG);
 
         botaoCancelar = createModernButton("Cancelar Venda");
+        botaoCancelar.setForeground(COLOR_BTN_TEXT); // texto escuro
         String[] formasPagamento = {"Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Pix"};
         comboFormaPagamento = new JComboBox<>(formasPagamento);
         comboFormaPagamento.setPreferredSize(new Dimension(160, 30));
         comboFormaPagamento.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         comboFormaPagamento.setBackground(COLOR_PANEL);
-        comboFormaPagamento.setForeground(COLOR_LABEL); // branco
+        comboFormaPagamento.setForeground(COLOR_LABEL); // texto escuro
+        comboFormaPagamento.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                lbl.setForeground(COLOR_LABEL); // texto escuro
+                lbl.setBackground(isSelected ? COLOR_BTN : COLOR_PANEL);
+                return lbl;
+            }
+        });
 
         botaoCancelar.addActionListener(new ActionListener() {
             @Override
@@ -228,6 +239,7 @@ public class JTelaPagamentoPDV extends JFrame {
         });
 
         JButton botaoVoltar = createModernButton("Voltar");
+        botaoVoltar.setForeground(COLOR_BTN_TEXT); // texto escuro
         botaoVoltar.addActionListener(e -> {
             JTelaPrincipal telaPrincipal = new JTelaPrincipal();
             telaPrincipal.setVisible(true);
@@ -304,7 +316,7 @@ public class JTelaPagamentoPDV extends JFrame {
     private JButton createModernButton(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(COLOR_BTN);
-        btn.setForeground(COLOR_BTN_TEXT); // texto branco
+        btn.setForeground(COLOR_BTN_TEXT); // texto escuro
         btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
