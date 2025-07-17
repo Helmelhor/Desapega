@@ -16,8 +16,8 @@ public class JEstoque extends JFrame {
     private final Color COLOR_BG = Color.decode("#153448");
     private final Color COLOR_BTN = Color.decode("#3C5B6F");
     private final Color COLOR_BTN_TEXT = Color.decode("#153448");
-    private final Color COLOR_LABEL = Color.decode("#DFD0B8");
-    private final Color COLOR_PANEL = Color.decode("#948979");
+    private final Color COLOR_LABEL = Color.decode("#153448"); // texto mais escuro
+    private final Color COLOR_PANEL = Color.decode("#DFD0B8"); // fundo mais claro para contraste
 
     /**
      * Launch the application.
@@ -49,8 +49,8 @@ public class JEstoque extends JFrame {
 
         JLabel titulo = new JLabel("ESTOQUE DE PRODUTOS", SwingConstants.CENTER);
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titulo.setForeground(COLOR_LABEL);
-        titulo.setBackground(COLOR_PANEL);
+        titulo.setForeground(COLOR_LABEL); // texto escuro
+        titulo.setBackground(COLOR_PANEL); // fundo claro para contraste
         titulo.setOpaque(true);
         titulo.setBorder(BorderFactory.createLineBorder(COLOR_LABEL, 2, true));
         contentPane.add(titulo, BorderLayout.NORTH);
