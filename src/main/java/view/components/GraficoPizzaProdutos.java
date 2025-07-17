@@ -24,7 +24,8 @@ public class GraficoPizzaProdutos extends JPanel {
                 String nome = (String) linha[0];
                 Integer estoque = (Integer) linha[1];
                 if (estoque != null && estoque > 0) {
-                    dataset.setValue(nome, estoque);
+                    // Mostra nome na legenda e nome + quantidade na fatia
+                    dataset.setValue(nome + " (" + estoque + ")", estoque);
                 }
             }
         } catch (Exception e) {
