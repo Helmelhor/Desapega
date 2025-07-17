@@ -2,6 +2,7 @@ package view;
 
 import com.desapega.Desapega_System.Domain.Models.ItemPedido;
 import com.desapega.Desapega_System.Domain.Models.Pedido;
+import com.desapega.Desapega_System.Domain.Models.Produtos;
 import com.desapega.Desapega_System.Services.BDServices;
 
 import java.awt.Color;
@@ -116,6 +117,26 @@ public class JFinancas extends JFrame {
 
 		// Cria o formatter para o formato desejado
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		// Primeiro as ENTRADAS
+		List<Produtos> produtos = BDServices.consultarTodosProdutos();
+		for (Produtos produto : produtos) {
+			String tipo = "Entrada";
+			String data = produto.getDataCadastro() != null
+					? produto.getDataCadastro().format(formatter)
+					: "-";
+			String nomeProduto = produto.getNomeProduto();
+			double precoUnit = produto.getPrecoProduto().doubleValue();
+			int quantidade = produto.getEstoqueProduto();
+
+			modelo.addRow(new Object[]{
+					tipo,
+					data,
+					nomeProduto,
+					String.format("R$ %.2f", precoUnit * quantidade),
+					quantidade
+			});
+		}
 
 		// Consulta todos os pedidos no banco
 		List<Pedido> pedidos = BDServices.consultarTodosPedidos();
