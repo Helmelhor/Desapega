@@ -149,4 +149,20 @@ public class BDServices {
         }
     }
 
+    public static void adicionarPedido(Pedido pedido) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(pedido);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
+
 }

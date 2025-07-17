@@ -2,6 +2,7 @@ package view;
 
 import com.desapega.Desapega_System.Domain.Models.ItemPedido;
 import com.desapega.Desapega_System.Domain.Models.Pedido;
+import com.desapega.Desapega_System.Services.BDServices;
 
 import java.awt.EventQueue;
 
@@ -22,58 +23,47 @@ public class JFinancas extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFinancas frame = new JFinancas();
-
-					//centralizando a tela
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				JFinancas frame = new JFinancas();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public JFinancas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 612, 342);
+		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		setLocationRelativeTo(null); // Centraliza a tela sempre que for aberta
+		setLocationRelativeTo(null);
 
-		JLabel lblResumoFinanceiro = new JLabel("Resumo Finaceiro");
-		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblResumoFinanceiro.setBounds(216, 10, 137, 22);
+		JLabel lblResumoFinanceiro = new JLabel("Resumo Financeiro");
+		lblResumoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblResumoFinanceiro.setBounds(250, 10, 200, 30);
 		contentPane.add(lblResumoFinanceiro);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 53, 534, 207);
+		scrollPane.setBounds(26, 53, 630, 250);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
-		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
-				new Object[][]{
-				},
+				new Object[][]{},
 				new String[]{
-						"Ent./Sa\u00EDda", "Data", "Produto", "Valor ", "Quantidade P."
+						"Tipo", "Data", "Produto(s)", "Valor Total", "Qtd Total"
 				}
 		));
+		scrollPane.setViewportView(table);
 
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(254, 270, 85, 21);
+		btnVoltar.setBounds(300, 320, 100, 25);
 		contentPane.add(btnVoltar);
 
 		btnVoltar.addActionListener(e -> {
@@ -81,6 +71,7 @@ public class JFinancas extends JFrame {
 			telaHome.setVisible(true);
 			dispose();
 		});
+
 		carregarDados();
 	}
 
@@ -88,31 +79,35 @@ public class JFinancas extends JFrame {
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		modelo.setRowCount(0);
 
-		List<Pedido> pedidos = com.desapega.Desapega_System.Services.BDServices.consultarTodosPedidos();
+		// Consulta todos os pedidos no banco
+		List<Pedido> pedidos = BDServices.consultarTodosPedidos();
 
 		for (Pedido pedido : pedidos) {
-			String tipo = "Saída";
+			String tipo = "Saída"; // Ex.: pode ser alterado futuramente
 			String data = pedido.getDataPedido().toString();
-			String produto = "";
+			StringBuilder produtosConcat = new StringBuilder();
 			double valorTotal = 0.0;
 			int quantidadeTotal = 0;
 
+			// Itera sobre os itens já relacionados ao pedido
 			for (ItemPedido item : pedido.getItensPedido()) {
-				if (item.getProdutos() != null) {
-					produto += item.getProdutos().getNomeProduto() + ", ";
-					valorTotal += item.getProdutos().getPrecoProduto().doubleValue() * item.getQuantidade();
+				if (item.getProduto() != null) {
+					produtosConcat.append(item.getProduto().getNomeProduto()).append(", ");
+					valorTotal += item.getProduto().getPrecoProduto().doubleValue() * item.getQuantidade();
 					quantidadeTotal += item.getQuantidade();
 				}
 			}
 
-			if (produto.endsWith(", ")) {
-				produto = produto.substring(0, produto.length() - 2);
+			// Remove a vírgula final
+			String listaProdutos = produtosConcat.toString();
+			if (listaProdutos.endsWith(", ")) {
+				listaProdutos = listaProdutos.substring(0, listaProdutos.length() - 2);
 			}
 
 			modelo.addRow(new Object[]{
 					tipo,
 					data,
-					produto,
+					listaProdutos,
 					String.format("R$ %.2f", valorTotal),
 					quantidadeTotal
 			});

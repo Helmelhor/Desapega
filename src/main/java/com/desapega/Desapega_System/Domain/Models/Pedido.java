@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ import java.util.List;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido", nullable = false)
     private Long idPedido;
 
     @Column(name = "data_pedido", nullable = false)
@@ -27,16 +29,6 @@ public class Pedido {
     @Column(name = "valor_total", nullable = false)
     private BigDecimal valorTotal;
 
-
-    // relacionamentos
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
-
-    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private NotaFiscal notaFiscal;
-
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemPedido> itensPedido;
-
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ItemPedido> itensPedido = new ArrayList<>();
 }

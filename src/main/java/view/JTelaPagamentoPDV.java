@@ -1,6 +1,8 @@
 package view;
 
 import com.desapega.Desapega_System.Domain.Controllers.CriacaoPagamento;
+import com.desapega.Desapega_System.Domain.Models.ItemPedido;
+import com.desapega.Desapega_System.Domain.Models.Pedido;
 import com.desapega.Desapega_System.Domain.Models.PedidoPagamento;
 import com.desapega.Desapega_System.Domain.Models.Produtos;
 import com.desapega.Desapega_System.Services.BDServices;
@@ -11,9 +13,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class JTelaPagamentoPDV extends JFrame {
 
@@ -25,7 +31,7 @@ public class JTelaPagamentoPDV extends JFrame {
     private final JLabel labelTotal;
     private final JButton botaoCancelar;
     private final JComboBox<String> comboFormaPagamento;
-    private JButton btnNewButton;
+    private JButton btnFinalizarCompra;
 
     private void atualizarTotal() {
         double totalVenda = 0.0;
@@ -129,7 +135,7 @@ public class JTelaPagamentoPDV extends JFrame {
                     });
 
                     atualizarTotal();
-                    btnNewButton.setEnabled(true);
+                    btnFinalizarCompra.setEnabled(true);
                 }
             }
         });
@@ -152,7 +158,7 @@ public class JTelaPagamentoPDV extends JFrame {
                         atualizarTotal();
 
                         if (tableModel.getRowCount() == 0) {
-                            btnNewButton.setEnabled(false);
+                            btnFinalizarCompra.setEnabled(false);
                         }
                     }
                 }
@@ -182,7 +188,7 @@ public class JTelaPagamentoPDV extends JFrame {
                     tableModel.removeRow(i);
                 }
                 labelTotal.setText("Total da venda: R$ 0.00");
-                btnNewButton.setEnabled(false);
+                btnFinalizarCompra.setEnabled(false);
             }
         });
 
@@ -203,59 +209,268 @@ public class JTelaPagamentoPDV extends JFrame {
 
         contentPane.add(painelSul, BorderLayout.SOUTH);
 
-        btnNewButton = new JButton("Finalizar Compra");
-        btnNewButton.setEnabled(false);
-        btnNewButton.addActionListener(new ActionListener() {
+        btnFinalizarCompra = new JButton("Finalizar Compra");
+        btnFinalizarCompra.setEnabled(false);
+        btnFinalizarCompra.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        painelSul.add(btnNewButton, BorderLayout.CENTER);
+        painelSul.add(btnFinalizarCompra, BorderLayout.CENTER);
 
-        btnNewButton.addActionListener(e -> {
-            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
+//        btnFinalizarCompra.addActionListener(e -> {
+//            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
+//
+//            CriacaoPagamento pagamentoController = new CriacaoPagamento();
+//            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
+//
+//            if (urlPagamento != null) {
+//                try {
+//                    Desktop.getDesktop().browse(new URI(urlPagamento));
+//                    int resposta = JOptionPane.showConfirmDialog(this, "O pagamento foi confirmado?", "Confirmar Pagamento", JOptionPane.YES_NO_OPTION);
+//                    if (resposta == JOptionPane.YES_OPTION) {
+//                        List<ItemPedido> itensPedido = new ArrayList<>();
+//                        for (int i = 0; i < tableModel.getRowCount(); i++) {
+//                            String nome = tableModel.getValueAt(i, 0).toString();
+//                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
+//                            double precoUnit = Double.parseDouble(
+//                                    tableModel.getValueAt(i, 1).toString()
+//                                            .replace("R$", "")
+//                                            .replace(",", ".")
+//                                            .trim()
+//                            );
+//
+//                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
+//                            if (produto != null) {
+//                                int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
+//                                produto.setEstoqueProduto(novoEstoque);
+//                                BDServices.atualizarEstoque(produto);
+//
+//                                ItemPedido itemPedido = new ItemPedido();
+//                                itemPedido.setProdutos(produto);
+//                                itemPedido.setPedido(null);
+//                                itemPedido.setQuantidade(quantidadeComprada);
+//                                itemPedido.setValorTotal(BigDecimal.valueOf(precoUnit * quantidadeComprada));
+//
+//                                itensPedido.add(itemPedido);
+//
+//                            } else {
+//                                JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+//                            }
+//
+//                        }
+//                        JOptionPane.showMessageDialog(this, "Estoque e pedido atualizados com sucesso!");
+//                    }
+//                    else {
+//                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+//                    }
+//
+//                    int linhas = tableModel.getRowCount();
+//                    for (int i = linhas - 1; i >= 0; i--) {
+//                        tableModel.removeRow(i);
+//                    }
+//                    labelTotal.setText("Total da venda: R$ 0.00");
+//                    btnFinalizarCompra.setEnabled(false);
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
+//            }
+//        });
+
+//        btnFinalizarCompra.addActionListener(e -> {
+//            List<PedidoPagamento.Item> itens = montarItensParaPagamento();
+//
+//            CriacaoPagamento pagamentoController = new CriacaoPagamento();
+//            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
+//
+//            if (urlPagamento != null) {
+//                try {
+//                    Desktop.getDesktop().browse(new URI(urlPagamento));
+//                    int resposta = JOptionPane.showConfirmDialog(this,
+//                            "O pagamento foi confirmado?",
+//                            "Confirmar Pagamento",
+//                            JOptionPane.YES_NO_OPTION);
+//
+//                    if (resposta == JOptionPane.YES_OPTION) {
+//                        // Lista para construir os itens do pedido
+//                        List<ItemPedido> itensPedido = new ArrayList<>();
+//
+//                        for (int i = 0; i < tableModel.getRowCount(); i++) {
+//                            String nome = tableModel.getValueAt(i, 0).toString();
+//                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
+//                            double precoUnit = Double.parseDouble(
+//                                    tableModel.getValueAt(i, 1).toString()
+//                                            .replace("R$", "")
+//                                            .replace(",", ".")
+//                                            .trim()
+//                            );
+//
+//                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
+//                            if (produto != null) {
+//                                // Atualiza estoque
+//                                int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
+//                                produto.setEstoqueProduto(novoEstoque);
+//                                BDServices.atualizarEstoque(produto);
+//                                long id_produto = produto.getIdProduto();
+//
+//                                // Cria o item de pedido
+//                                ItemPedido itemPedido = new ItemPedido();
+//                                itemPedido.setId_pedido(null); // será setado após criar o pedido
+//                                itemPedido.setId_produto(id_produto);
+//                                itemPedido.setQuantidade(quantidadeComprada);
+//                                itemPedido.setValorTotal(BigDecimal.valueOf(precoUnit * quantidadeComprada));
+//
+//                                itensPedido.add(itemPedido);
+//                            }
+//                        }
+//
+//                        // Cria o pedido com os itens
+//                        Pedido pedido = new Pedido();
+//                        pedido.setDataPedido(LocalDateTime.now());
+//                        pedido.setValorTotal(
+//                                itensPedido.stream()
+//                                        .map(ItemPedido::getValorTotal)
+//                                        .reduce(BigDecimal.ZERO, BigDecimal::add)
+//                        );
+//
+//                        //adiciona todos os itens um por um
+//                        for (ItemPedido ip : itensPedido) {
+//                            BDServices.adicionarItensPedido(ip);
+//                        }
+//
+//                        BDServices.adicionarPedido(pedido);
+//
+//
+//                        JOptionPane.showMessageDialog(this, "Estoque atualizado e pedido registrado com sucesso!");
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+//                    }
+//
+//                    // Limpa tabela e reseta total
+//                    int linhas = tableModel.getRowCount();
+//                    for (int i = linhas - 1; i >= 0; i--) {
+//                        tableModel.removeRow(i);
+//                    }
+//                    labelTotal.setText("Total da venda: R$ 0.00");
+//                    btnFinalizarCompra.setEnabled(false);
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
+//            }
+//        });
+
+        btnFinalizarCompra.addActionListener(e -> {
+            List<PedidoPagamento.Item> itensPagamento = montarItensParaPagamento();
 
             CriacaoPagamento pagamentoController = new CriacaoPagamento();
-            String urlPagamento = pagamentoController.criarPagamentoComItens(itens);
+            String urlPagamento = pagamentoController.criarPagamentoComItens(itensPagamento);
 
             if (urlPagamento != null) {
                 try {
                     Desktop.getDesktop().browse(new URI(urlPagamento));
-                    int resposta = JOptionPane.showConfirmDialog(this, "O pagamento foi confirmado?", "Confirmar Pagamento", JOptionPane.YES_NO_OPTION);
-                    if (resposta == JOptionPane.YES_OPTION) {
-                        for (int i = 0; i < tableModel.getRowCount(); i++) {
-                            String nome = tableModel.getValueAt(i, 0).toString();
-                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
 
-                            Produtos produto = BDServices.buscarProdutoPorNome(nome);
+                    int resposta = JOptionPane.showConfirmDialog(
+                            this,
+                            "O pagamento foi confirmado?",
+                            "Confirmar Pagamento",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        // -----------------------------
+                        // AGRUPAMENTO DE ITENS POR PRODUTO
+                        // -----------------------------
+                        Map<Long, ItemPedido> itensAgrupados = new HashMap<>();
+                        BigDecimal totalPedido = BigDecimal.ZERO;
+
+                        // percorre os itens da tabela para agrupar
+                        for (int i = 0; i < tableModel.getRowCount(); i++) {
+                            String nomeProduto = tableModel.getValueAt(i, 0).toString();
+                            int quantidadeComprada = Integer.parseInt(tableModel.getValueAt(i, 2).toString());
+                            BigDecimal precoUnit = new BigDecimal(
+                                    tableModel.getValueAt(i, 1).toString()
+                                            .replace("R$", "")
+                                            .replace(",", ".")
+                                            .trim()
+                            );
+
+                            Produtos produto = BDServices.buscarProdutoPorNome(nomeProduto);
                             if (produto != null) {
+                                // Atualiza estoque
                                 int novoEstoque = produto.getEstoqueProduto() - quantidadeComprada;
                                 produto.setEstoqueProduto(novoEstoque);
                                 BDServices.atualizarEstoque(produto);
-                            } else {
-                                JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+
+                                // Agrupa por id_produto
+                                ItemPedido existente = itensAgrupados.get(produto.getIdProduto());
+                                if (existente == null) {
+                                    ItemPedido item = new ItemPedido();
+                                    item.setProduto(produto);
+                                    item.setQuantidade(quantidadeComprada);
+                                    item.setValorTotal(precoUnit.multiply(BigDecimal.valueOf(quantidadeComprada)));
+                                    itensAgrupados.put(produto.getIdProduto(), item);
+                                } else {
+                                    existente.setQuantidade(existente.getQuantidade() + quantidadeComprada);
+                                    existente.setValorTotal(
+                                            existente.getValorTotal()
+                                                    .add(precoUnit.multiply(BigDecimal.valueOf(quantidadeComprada)))
+                                    );
+                                }
                             }
                         }
-                        JOptionPane.showMessageDialog(this, "Estoque atualizado com sucesso!");
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(this, "Venda cancelada. Nenhum estoque alterado.");
+
+                        // -----------------------------
+                        // CRIA O PEDIDO E VINCULA ITENS AGRUPADOS
+                        // -----------------------------
+                        Pedido pedido = new Pedido();
+                        pedido.setDataPedido(LocalDateTime.now());
+                        pedido.setItensPedido(new ArrayList<>(itensAgrupados.values()));
+
+                        // calcula o total
+                        for (ItemPedido item : itensAgrupados.values()) {
+                            item.setPedido(pedido); // vínculo ManyToOne
+                            totalPedido = totalPedido.add(item.getValorTotal());
+                        }
+
+                        pedido.setValorTotal(totalPedido);
+
+                        // salva tudo de uma vez com cascade
+                        BDServices.adicionarPedido(pedido);
+
+                        JOptionPane.showMessageDialog(this,
+                                "Estoque atualizado e pedido registrado com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(this,
+                                "Venda cancelada. Nenhum estoque alterado.");
                     }
 
+                    // Limpa tabela e reseta total
                     int linhas = tableModel.getRowCount();
                     for (int i = linhas - 1; i >= 0; i--) {
                         tableModel.removeRow(i);
                     }
                     labelTotal.setText("Total da venda: R$ 0.00");
-                    btnNewButton.setEnabled(false);
+                    btnFinalizarCompra.setEnabled(false);
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Erro ao abrir o navegador para pagamento.");
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao abrir o navegador para pagamento.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Erro ao criar link de pagamento.");
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao criar link de pagamento.");
             }
         });
+
+
 
     }
 
